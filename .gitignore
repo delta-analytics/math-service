@@ -1,0 +1,5 @@
+.DS_Store
+.idea
+math-service.iml
+target
+*.log
