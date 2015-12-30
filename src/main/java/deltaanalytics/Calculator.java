@@ -8,7 +8,7 @@ import org.apache.commons.math3.util.Precision;
 
 import java.io.File;
 
-public class App {
+public class Calculator {
 
     public static void main(String[] args) {
         OctaveEngineFactory factory = new OctaveEngineFactory();
