@@ -56,13 +56,14 @@ public class Calculator {
         octave.eval("intensThres2 = 1e-25");
         octave.eval("isotopo2 = 2;");
         octave.eval("sf = 1");  // scaling factor isotopo2
-        octave.eval("Temp = 313");  // Temperature 40 °C
-        octave.eval("Patm = 1 "); // total Pressure in ATM units
+        octave.eval("Temp = 313");  // Temperature 40 °C jüke
+        octave.eval("Patm = 1 "); // total Pressure in ATM units jüke
         octave.eval("Dd = 5;");   // wings of each line
 
         octave.eval("global ratio_E_vs_E_filt;");  // normalize the area under the curve after convolution
     }
 
+    //fest
     private static void getHitranData(OctaveEngine octave) {
         // get Hitran data
         String hitran_spectrum = "" //
