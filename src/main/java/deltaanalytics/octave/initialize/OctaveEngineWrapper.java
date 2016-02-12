@@ -8,15 +8,14 @@ import java.io.File;
 public class OctaveEngineWrapper {
     private static OctaveEngine octaveEngine;
 
-    public static OctaveEngine build(OctaveEngineFactory octaveEngineFactory) {
-        OctaveEngine octave = null;
+    public static OctaveEngine build(OctaveEngineFactory octaveEngineFactory, String octaveCliPath) {
         if (octaveEngine == null) {
             OctaveEngineFactory factory = new OctaveEngineFactory();
-            factory.setOctaveProgram(new File("C:\\Octave\\Octave-4.0.0\\bin\\octave-cli"));
-            octave = factory.getScriptEngine();
-            octave.eval("pkg load optim");  // load optimization package for levenberg marquart leasqr.m, etc.
+            //factory.setOctaveProgram(new File(octaveCliPath));  // "C:\\Octave\\Octave-4.0.0\\bin\\octave-cli"
+            octaveEngine = factory.getScriptEngine();
+            octaveEngine.eval("pkg load optim");  // load optimization package for levenberg marquart leasqr.m, etc.
         }
-        return octave;
+        return octaveEngine;
     }
 
     public static void close() {

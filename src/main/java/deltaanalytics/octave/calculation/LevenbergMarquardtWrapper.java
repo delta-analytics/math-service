@@ -1,34 +1,28 @@
 package deltaanalytics.octave.calculation;
 
 import dk.ange.octave.OctaveEngine;
+import deltaanalytics.octave.input.LevenberqMarquartInputParameters;
 
 public class LevenbergMarquardtWrapper {
-    public void initializeLevenbergMarquardt(OctaveEngine octave, boolean nlcorr) {
+    public void initializeLevenbergMarquardt(OctaveEngine octave, LevenberqMarquartInputParameters lmParameters) {
         // parameters for Levenberg Marquardt
         // dp = fractional incr of p for numerical partials in dfdp, default= .001*ones(size(pin)), if dp=0 parameter is fixed
-        if (nlcorr) {
-            octave.eval("F = 'leasqrfunc2'");
-            octave.eval("dp = [0.01; 0.01; 0.01; 0.01; 0.01; 0.01; 0.01; 0.01];");
-            octave.eval("pin = [1e-4; 1.0; 22.5*1e-3; 2e-6; 0; 0; -1e-5; 1e-10];");
-            octave.eval("minvalues = [-0.1; 0.5; 5*1e-3;     0; 0; -0.1; -1e-2; 0];");
-            octave.eval("maxvalues = [ 0.1; 2.0; 40*1e-3; 1e-3; 1;  0.1; 0;  1e-2];");
-        } else {
-            octave.eval("F = 'leasqrfunc'");
-            octave.eval("dp = [0.01; 0.01; 0.01; 0.01; 0.01; 0.01];");  // baseline_step = 0 => no fit of baseline shape
-            octave.eval("pin = [1e-4; 1.0; 22.5*1e-3; 2e-6; 0; 0];");  //  initial guess: offset, res, FOV, mixing ratio, baseline scale, wavenumber shift
-            octave.eval("minvalues = [-0.1; 0.5; 5*1e-3;     0; 0; -0.1];");
-            octave.eval("maxvalues = [ 0.1; 2.0; 40*1e-3; 1e-3; 1;  0.1];");
-        }
-        octave.eval("if(baseline_step == 0), dp(5) = 0; end");  // only fit offset, no baseline distortion
-        octave.eval("dFdp = 'dfdp';"); // estimated derivative use with dfdp.m
-        octave.eval("wt1 = ones(length(wav(idx1:idx2)),1);");  // default 1.0
-        octave.eval("stol = 1e-4;");  // scalar tolerances on fractional improvement in ss, default stol=.0001
-        octave.eval("niter = 15;");  // scalar max no. of iterations, default = 20
-        octave.eval("minstep = ones(length(pin),1)*0;");   // Iteration stops if fractional change in parameters on two consecutive iterations is less than values in minstep
-        octave.eval("maxstep = ones(length(pin),1)*Inf;");  // if .bounds is used
-        octave.eval("options.fract_prec = minstep;");
-        octave.eval("options.fract_change = maxstep;");
-        octave.eval("options.bounds = [minvalues, maxvalues];");
+        octave.eval(lmParameters.getFdefEval());
+        octave.eval(lmParameters.getDpEval());  // baseline_step = 0 => no fit of baseline shape
+        octave.eval(lmParameters.getPinEval());  // initial guess: offset, res, FOV, mixing ratio, baseline scale, wavenumber shift
+        octave.eval(lmParameters.getMinValuesEval());
+        octave.eval(lmParameters.getMaxValuesEval());
+
+        octave.eval(lmParameters.getBaselineEval());  // only fit offset, no baseline distortion
+        octave.eval(lmParameters.getDfdpEval()); // estimated derivative use with dfdp.m
+        octave.eval(lmParameters.getStatWeightsEval());  // default 1.0
+        octave.eval(lmParameters.getStolEval());  // scalar tolerances on fractional improvement in ss, default stol=.0001
+        octave.eval(lmParameters.getNiterEval());  // scalar max no. of iterations, default = 20
+        octave.eval(lmParameters.getMinstepEval());   // Iteration stops if fractional change in parameters on two consecutive iterations is less than values in minstep
+        octave.eval(lmParameters.getMaxstepEval());  // if .bounds is used
+        octave.eval(lmParameters.getOptFractPrecisionEval());  // desired fractional precisions in parameter estimates
+        octave.eval(lmParameters.getOptFractChangeEval());  // maximum fractional step changes in parameter vector
+        octave.eval(lmParameters.getOptBoundsEval());
 
         //octave.eval("A = [0; 0; 0; 0; 0; 0; -1; 1];");  // constraints p7<=p8
         //octave.eval("B = 0;");

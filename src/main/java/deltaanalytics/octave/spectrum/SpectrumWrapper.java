@@ -1,11 +1,12 @@
 package deltaanalytics.octave.spectrum;
 
 import dk.ange.octave.OctaveEngine;
+import deltaanalytics.octave.input.SpectrumInput;
 
 public class SpectrumWrapper {
-    public void getFtirData(OctaveEngine octave, String ftir_file_name) {
+    public void getFtirData(OctaveEngine octave, SpectrumInput brukerSpectrum) {
         // ftir data
-        octave.eval(ftir_file_name);
+        octave.eval(brukerSpectrum.getDataFileEval());  // 'ftir_data=Path_to_Bruker_dpt_File'
         octave.eval("FTIR_AB = load('-ascii', ftir_data);");   // name of matrix is FTIR_AB: columns of data, 1st wavenumber. 2nd absorbance
         octave.eval("N = length(FTIR_AB(:,1));");
         octave.eval("wav = flipud(FTIR_AB(1:N,1));");   //col vector

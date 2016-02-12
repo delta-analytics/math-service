@@ -1,41 +1,41 @@
 package deltaanalytics.octave.hitran;
 
 import deltaanalytics.octave.input.HitranInput;
-import deltaanalytics.octave.input.InputParameter;
-import deltaanalytics.octave.input.MW;
+import deltaanalytics.octave.input.HitranInputParameters;
 import dk.ange.octave.OctaveEngine;
 
 public class HitranWrapper {
-    public void initialize(OctaveEngine octaveEngine, String molecule, InputParameter inputParameter) {
-        octaveEngine.eval(molecule);  // molecule to investigate => mo=..
-        octaveEngine.eval(HitranInput.values());
-        octaveEngine.eval("hitran_input = hitran_input{mo}");
-        octaveEngine.eval(MW.values());   // molecular weight
-        octaveEngine.eval(inputParameter.getCallHitranEval());  // call Hitran_function2
-        octaveEngine.eval("low = [3860, 3470, 2500, 2080, 2900, 3730, 2840];");
-        octaveEngine.eval("high = [3965, 3760, 2600, 2141, 3165 3780, 2940];");
-        octaveEngine.eval("baseline_step = 0;");  // baseline correction, baseline_step = 0: no correction, only offset
+    public void initialize(OctaveEngine octaveEngine, HitranInputParameters inputParameter) {
+        octaveEngine.eval(HitranInput.csvFiles());  // Hitran csv files
+        octaveEngine.eval(HitranInput.molWeights());   // Hitran molecular weights
+        
+        octaveEngine.eval(inputParameter.moleculeStringEval());  // mo=.. integer number 1..7 i.e. "mo=2"
+        octaveEngine.eval(inputParameter.getMoleculeEval());  // hitran_input=
+        octaveEngine.eval(inputParameter.getCallHitranEval());  // array of boolean to indicate which moleculeString to (re)investigate
+        octaveEngine.eval(inputParameter.getLowWnEval());  // array of wavenumbers start
+        octaveEngine.eval(inputParameter.getHighWnEval());  // array of wavenumbers end
+        octaveEngine.eval(inputParameter.getBaselineStepEval());  // baseline correction, baseline_step = 0: no correction, only offset
 
-        octaveEngine.eval("MW = MW(mo)");
-        octaveEngine.eval("anfang = low(mo)");
-        octaveEngine.eval("ende = high(mo)");
+        octaveEngine.eval(inputParameter.getMolWeightEval());  // MW=
+        octaveEngine.eval(inputParameter.getAnfangEval());  // anfang=
+        octaveEngine.eval(inputParameter.getEndeEval());  // ende=
 
         // parameters for hitran line shape function
-        octaveEngine.eval("stp = 0.02");  // frequency comb spacing in cm-1, corresponds to 0.04 resolution in cm-1
-        octaveEngine.eval("intensThres1 = 1e-25");
-        octaveEngine.eval("isotopo1 = 1;");
-        octaveEngine.eval("intensThres2 = 1e-25");
-        octaveEngine.eval("isotopo2 = 2;");
-        octaveEngine.eval("sf = 1");  // scaling factor isotopo2
-        octaveEngine.eval("Temp = 313");  // Temperature 40 °C
-        octaveEngine.eval("Patm = 1 "); // total Pressure in ATM units
-        octaveEngine.eval("Dd = 5;");   // wings of each line
+        octaveEngine.eval(inputParameter.getStpEval());  // stp = 0.02
+        octaveEngine.eval(inputParameter.getIntensThres1Eval()); //intensThres1 = 1e-25
+        octaveEngine.eval(inputParameter.getIsotopo1Eval());  //isotopo1 = 1
+        octaveEngine.eval(inputParameter.getIntensThres2Eval()); //intensThres2 = 1e-25
+        octaveEngine.eval(inputParameter.getIsotopo2Eval());  //isotopo2 = 2
+        octaveEngine.eval(inputParameter.getSfEval());  // sf = 1; scaling factor isotopo2
+        octaveEngine.eval(inputParameter.getTempEval());  //Temp = 313; Temperature 40 °C
+        octaveEngine.eval(inputParameter.getPatmEval());  //Patm = 1; total Pressure in ATM units
+        octaveEngine.eval(inputParameter.getDdEval());  //Dd = 5; wings of each line
 
-        octaveEngine.eval("global ratio_E_vs_E_filt;");  // normalize the area under the curve after convolution
+        octaveEngine.eval(inputParameter.getNormalizeEvsEfilt());  // normalize the area under the curve after convolution
     }
 
     public void getHitranData(OctaveEngine octave) {
-        // get Hitran data
+        // get Hitran data, calculate from Hitran_function2 or load from file
         String hitran_spectrum = "" //
                 + "if(call_hitran(mo))\n" //
                 + " [grd, SgmvTot, v0, gV, STot, STot2] = Hitran_function2( hitran_input, anfang, ende, stp, intensThres1, isotopo1, intensThres2, isotopo2, sf, Temp, Patm, MW, Dd );\n" //
@@ -58,7 +58,7 @@ public class HitranWrapper {
         // caluclate Extinction
         octave.eval("nL = 2.47937e19;");  //  at 296 K in 1/cm³ Loschmidt number(Navo/MolV)=2.68678e25  at 273.15 K in 1/m^3
         octave.eval("dist = 5.4;");  // distance in m (4.8 for Bruker Alpha, 5.33 for Bruker Matrix at 1ATM)
-        octave.eval("Ext_Hitr = log10(e) * SgmvTot * nL * 296/Temp * dist*100;");  // SgmvTot in cm^2/(molecule*ATM), pressure in ATM, log10(e) = 0.43429
+        octave.eval("Ext_Hitr = log10(e) * SgmvTot * nL * 296/Temp * dist*100;");  // SgmvTot in cm^2/(moleculeString*ATM), pressure in ATM, log10(e) = 0.43429
         octave.eval("AHitr = [grd, Ext_Hitr];");  // save as 2 column matrix
         octave.eval("save('-ascii', 'HitranExtinktion', 'AHitr');");
         octave.eval("integral_Extinction_Hitr = trapz(grd, Ext_Hitr);");  // should be a little less then pure sum of S
