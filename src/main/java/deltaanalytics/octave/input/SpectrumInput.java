@@ -10,7 +10,7 @@ public class SpectrumInput {
         this.dataPointTableFile = dataPointTableFile;
     }
     public String getDataFileEval(){
-        return "data_file = " + getDataPointTableFile() + ";";
+        return "ftir_data = " + getDataPointTableFile() + ";";
     }
     
 }

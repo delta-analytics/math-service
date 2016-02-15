@@ -3,6 +3,7 @@ package deltaanalytics.octave.calculation;
 import deltaanalytics.octave.output.Result;
 import dk.ange.octave.OctaveEngine;
 import dk.ange.octave.type.OctaveDouble;
+import java.io.IOException;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.util.Precision;
 
@@ -62,6 +63,12 @@ public class ResultWrapper {
         octave.eval("axis([min(wav(idx1:idx2)) max(wav(idx1:idx2)) min(ab_minus_offset) max(ab_minus_offset)*1.02]);");
         octave.eval("set(gca(),'XDir','reverse');");
         octave.eval("grid('minor')");
-        octave.eval("drawnow()");        
+        octave.eval("drawnow()");
+	try {
+        	System.in.read();
+    	} catch (IOException e) {
+        	e.printStackTrace();
+		octave.close();
+    	}        
     }
 }

@@ -30,9 +30,9 @@ public class LevenbergMarquardtWrapper {
     }
 
     public void startLevenbergMarquardt(OctaveEngine octave) {
-        System.out.println("Starte Levenberg-Marquardt nichtlineare Regression");
         octave.eval("global verbose;");
         octave.eval("verbose=0;");
+        //octave.eval("options");
         long time1 = System.currentTimeMillis();
         String fit = "" //
                 + "[f1, p1, kvg1, iter1, corp1, covp1, covr1, stdresid1, Z1, r21] = ...\n" //

@@ -18,7 +18,7 @@ public class LevenberqMarquartInputParametersTest {
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     /**
      * Test of getStolEval method, of class LevenberqMarquartInputParameters.
      */
@@ -57,7 +57,8 @@ public class LevenberqMarquartInputParametersTest {
 
         String expResult = "dp = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01];";
         String result = instance.getDpEval();
-        assertEquals(expResult, result);       
+        assertEquals(expResult, result);
+        assertEquals(instance.getDp().length, 6);
     }
     /**
      * Test of getDpEval method, of class LevenberqMarquartInputParameters.
@@ -98,6 +99,7 @@ public class LevenberqMarquartInputParametersTest {
         String expResult = "minvalues = [-0.1, 0.5, 0.005, 0.0, 0.0, -0.1];";
         String result = instance.getMinValuesEval();
         assertEquals(expResult, result);
+        assertEquals(instance.getMaxValues().length, 6);
     }
 
     /**

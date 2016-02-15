@@ -13,6 +13,10 @@ public class LevenberqMarquartInputParameters {
     private double stol;  // tolerance criterium of aborting fit
     private int niter;  // max number of iterations
     private boolean nlCorr;
+    
+    public LevenberqMarquartInputParameters() {
+        
+    }
 
     public LevenberqMarquartInputParameters(LevenbergMarquartParameters LmPars){
         this.nlCorr = LmPars.isNlCorr();
@@ -32,7 +36,7 @@ public class LevenberqMarquartInputParameters {
         this.niter = LmPars.getNiter();
     }
 
-
+    
     public double getStol() {
         return stol;
     }
@@ -126,6 +130,6 @@ public class LevenberqMarquartInputParameters {
         return "options.fract_change = maxstep;";
     }
     public String getOptBoundsEval() {
-        return "options.bounds = [minvalues, maxvalues];";
+        return "options.bounds = [minvalues', maxvalues'];";
     }
 }
