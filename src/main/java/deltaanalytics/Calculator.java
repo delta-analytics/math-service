@@ -1,7 +1,5 @@
 package deltaanalytics;
 
-import deltaanalytics.gui.math.HitranParameters;
-import deltaanalytics.gui.math.LevenbergMarquartParameters;
 import deltaanalytics.octave.calculation.LevenbergMarquardtWrapper;
 import deltaanalytics.octave.calculation.ResultWrapper;
 import deltaanalytics.octave.hitran.HitranWrapper;
@@ -29,7 +27,7 @@ public class Calculator {
         octave.eval("cd lib");
 
         LOGGER.info("Hole HITRAN Daten");        
-        inputParameter = new HitranInputParameters(new HitranParameters());
+        inputParameter = new HitranInputParameters();
         HitranWrapper hitranWrapper = new HitranWrapper();
         hitranWrapper.initialize(octave, inputParameter);
         hitranWrapper.getHitranData(octave);
@@ -40,7 +38,7 @@ public class Calculator {
         SpectrumWrapper spectrumWrapper = new SpectrumWrapper();
         spectrumWrapper.getFtirData(octave, brukerSpectrum);
 
-        lmParameters = new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        lmParameters = new LevenberqMarquartInputParameters();
         LevenbergMarquardtWrapper levenbergMarquardtWrapper = new LevenbergMarquardtWrapper();
         levenbergMarquardtWrapper.initializeLevenbergMarquardt(octave, lmParameters);
         
