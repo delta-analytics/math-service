@@ -2,8 +2,11 @@ package deltaanalytics.octave.calculation;
 
 import dk.ange.octave.OctaveEngine;
 import deltaanalytics.octave.input.LevenberqMarquartInputParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LevenbergMarquardtWrapper {
+    private Logger LOGGER = LoggerFactory.getLogger(LevenbergMarquardtWrapper.class);    
     public void initializeLevenbergMarquardt(OctaveEngine octave, LevenberqMarquartInputParameters lmParameters) {
         // parameters for Levenberg Marquardt
         // dp = fractional incr of p for numerical partials in dfdp, default= .001*ones(size(pin)), if dp=0 parameter is fixed
@@ -38,8 +41,11 @@ public class LevenbergMarquardtWrapper {
                 + "[f1, p1, kvg1, iter1, corp1, covp1, covr1, stdresid1, Z1, r21] = ...\n" //
                 + "leasqr(wav(idx1:idx2), ab(idx1:idx2), pin, F, stol, niter, wt1, dp, dFdp, options);\n" //
                 + "";
-        octave.eval(fit);  // leasqrfunc2 includes optimization of baseline/offset
+        octave.eval(fit);  // F calls leasqrfunc or leasqrfunc2 (includes optimization of baseline/offset)
         long time2 = System.currentTimeMillis();
-        System.out.println("Time in sec for Levenberg Marquardt fit = " + (time2 - time1) / 1000);
+        double time = (time2 - time1) / 1000;
+        String timeEvalString = "fitting_time = " + String.valueOf(time)+ ";";
+        octave.eval(timeEvalString);
+        LOGGER.info("Time in sec for Levenberg Marquardt fit = " + time);
     }
 }

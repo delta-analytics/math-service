@@ -214,7 +214,7 @@ public class LevenberqMarquartInputParametersTest {
         LevenberqMarquartInputParameters instance = 
                 new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
         
-        String expResult = "options.bounds = [minvalues, maxvalues];";
+        String expResult = "options.bounds = [minvalues', maxvalues'];";
         String result = instance.getOptBoundsEval();
         assertEquals(expResult, result);
     }

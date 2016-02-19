@@ -51,6 +51,11 @@ public class ResultWrapper {
         result.setAmplitudeFitFactor(amplitude_fit_factor);
         double offset_fit_constant = Precision.round(fitParams.get(1), 6);
         result.setOffsetFitConstant(offset_fit_constant);
+        
+        OctaveDouble time = (OctaveDouble) octave.get("fitting_time");
+        result.setTimeInSecForLevenbergMarquardtFit(Precision.round(time.get(1), 2));
+        
+        //System.out.println(result.toString());
 
         return result;
     }

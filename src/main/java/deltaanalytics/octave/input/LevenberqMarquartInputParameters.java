@@ -5,14 +5,14 @@ import deltaanalytics.gui.math.LevenbergMarquartParameters;
 
 
 public class LevenberqMarquartInputParameters {
-    private final int LINEARSIZE = 6;  // reduce arrays size from 8 to 6 if nlCorr = false
+    private final int LINEARSIZE = 6;  // reduce array size from 8 to 6 if nlCorr = false
     private double[] dp;
     private double[] pin;
     private double[] minValues;
     private double[] maxValues;
-    private double stol;  // tolerance criterium of aborting fit
+    private double stol;  // tolerance criterium for aborting fit
     private int niter;  // max number of iterations
-    private boolean nlCorr;
+    private boolean nlCorr;  // non linear correction  yes/no
     
     public LevenberqMarquartInputParameters() {
         
@@ -132,4 +132,5 @@ public class LevenberqMarquartInputParameters {
     public String getOptBoundsEval() {
         return "options.bounds = [minvalues', maxvalues'];";
     }
+       
 }

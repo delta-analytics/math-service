@@ -3,12 +3,8 @@ package deltaanalytics.octave.input;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
 public class SpectrumInputTest {
-    
-    public SpectrumInputTest() {
-    }
-    
+        
     @Test
     public void testGetAndSetDataPointTableFile() {
         SpectrumInput instance = new SpectrumInput();

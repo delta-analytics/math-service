@@ -13,4 +13,5 @@ public class SpectrumInput {
         return "ftir_data = " + getDataPointTableFile() + ";";
     }
     
+    
 }

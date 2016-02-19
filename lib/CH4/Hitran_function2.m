@@ -30,7 +30,7 @@ function [grd, SgmvTot, v0, gV, STot, STot2] = Hitran_function2( hitran_input, a
 
 	tm1 = time();
 	C = csvread (filename);
-	fprintf("read hitran data in %1.2f sec\n", time()-tm1);
+	%fprintf("read hitran data in %1.2f sec\n", time()-tm1);
 
 	% Anfang und Ende des Wellenzahlbereichs
 	if nargin>1
@@ -96,7 +96,7 @@ function [grd, SgmvTot, v0, gV, STot, STot2] = Hitran_function2( hitran_input, a
 	%N = length(C(:,1));
 	[idx1, wnr1] = vpos(C(:,3), anfang);   % 1st data point
 	[idx2, wnr2] = vpos(C(:,3), ende);   % last data point
-	fprintf("selected lines %d\n", length(C(idx1:idx2, 1)));
+	%fprintf("selected lines %d\n", length(C(idx1:idx2, 1)));
         %% define a grid
 	%Dd = 1.0; %% define the edge extended beyond the spectrum region; Dd is also used for the wings of each line
         rangeL =  -Dd + wnr1;  %% spectrum region: First line minus Dd cm-1
@@ -204,5 +204,5 @@ function [grd, SgmvTot, v0, gV, STot, STot2] = Hitran_function2( hitran_input, a
 	SgmvTot2 = SgmvTot2 * STot2/integral_SgmvTot2;  ## normalize to total sum of Hitran line strengths, STP standard temperature and presssure
 	STot = STot + STot2;
 	#SgmvTot = SgmvTot * STot/integral_SgmvTot;  ## normalize to total sum of Hitran line strengths, STP standard temperature and presssure
-	fprintf("calculate hitran spectra in %1.2f sec\n", time()-tm2);
+	%fprintf("calculate hitran spectra in %1.2f sec\n", time()-tm2);
 endfunction

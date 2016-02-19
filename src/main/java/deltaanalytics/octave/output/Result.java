@@ -120,4 +120,10 @@ public class Result {
     public void setDp(ArrayRealVector dp) {
         this.dp = dp;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" + "mixingRatioFromIntegralUnderTheCurve=" + mixingRatioFromIntegralUnderTheCurve + ", mixingRatioFromHitranSum=" + mixingRatioFromHitranSum + ", r2=" + r2 + ", TimeInSecForLevenbergMarquardtFit=" + TimeInSecForLevenbergMarquardtFit + ", fitParams=" + fitParams + ", estimatedFov=" + estimatedFov + ", fovLineShift=" + fovLineShift + ", additionalLineShift=" + additionalLineShift + ", effectiveResolution=" + effectiveResolution + ", amplitudeFitFactor=" + amplitudeFitFactor + ", offsetFitConstant=" + offsetFitConstant + ", initialGuess=" + initialGuess + ", dp=" + dp + '}';
+    }
+    
 }

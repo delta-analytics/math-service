@@ -9,13 +9,8 @@ public class HitranWrapper {
         octaveEngine.eval(HitranInput.csvFiles());  // Hitran csv files
         octaveEngine.eval(HitranInput.molWeights());   // Hitran molecular weights
         
-        octaveEngine.eval(inputParameter.moleculeStringEval());  // mo=.. integer number 1..7 i.e. "mo=2"
         octaveEngine.eval(inputParameter.getMoleculeEval());  // hitran_input=
-        octaveEngine.eval(inputParameter.getCallHitranEval());  // array of boolean to indicate which moleculeString to (re)investigate
-        octaveEngine.eval(inputParameter.getLowWnEval());  // array of wavenumbers start
-        octaveEngine.eval(inputParameter.getHighWnEval());  // array of wavenumbers end
         octaveEngine.eval(inputParameter.getBaselineStepEval());  // baseline correction, baseline_step = 0: no correction, only offset
-
         octaveEngine.eval(inputParameter.getMolWeightEval());  // MW=
         octaveEngine.eval(inputParameter.getAnfangEval());  // anfang=
         octaveEngine.eval(inputParameter.getEndeEval());  // ende=
@@ -32,12 +27,14 @@ public class HitranWrapper {
         octaveEngine.eval(inputParameter.getDdEval());  //Dd = 5; wings of each line
 
         octaveEngine.eval(inputParameter.getNormalizeEvsEfilt());  // normalize the area under the curve after convolution
+        //octaveEngine.eval("whos");
     }
 
-    public void getHitranData(OctaveEngine octave) {
+    public void getHitranData(OctaveEngine octave, HitranInputParameters inputParameter) {
         // get Hitran data, calculate from Hitran_function2 or load from file
-        String hitran_spectrum = "" //
-                + "if(call_hitran(mo))\n" //
+        String hitran_spectrum = "";
+        if (inputParameter.getCallHitran()){
+            hitran_spectrum = "" //
                 + " [grd, SgmvTot, v0, gV, STot, STot2] = Hitran_function2( hitran_input, anfang, ende, stp, intensThres1, isotopo1, intensThres2, isotopo2, sf, Temp, Patm, MW, Dd );\n" //
                 + " grd = grd';\n" //
                 + " SgmvTot = SgmvTot';\n" //
@@ -45,14 +42,17 @@ public class HitranWrapper {
                 + "save('-ascii', strcat('HitranSpektrum_',hitran_input,'_sf(',num2str(sf),')_wn',num2str(anfang),'-',num2str(ende)), 'A');\n" //
                 + "save('-ascii', strcat('HitranSpektrum_',hitran_input,'_sf(',num2str(sf),')_wn',num2str(anfang),'-',num2str(ende),'_STot'), 'STot');\n" //
                 + "save('-ascii', strcat('HitranSpektrum_',hitran_input,'_sf(',num2str(sf),')_wn',num2str(anfang),'-',num2str(ende),'_STot2'), 'STot2');\n" //
-                + "else\n" //
+                + ""; //
+            
+        } else {
+            hitran_spectrum = "" //
                 + " A = load('-ascii', strcat('HitranSpektrum_',hitran_input,'_sf(',num2str(sf),')_wn',num2str(anfang),'-',num2str(ende)));\n" //
                 + " grd = A(:,1);\n" //
                 + " SgmvTot = A(:,2);\n" //
                 + " STot = load('-ascii', strcat('HitranSpektrum_',hitran_input,'_sf(',num2str(sf),')_wn',num2str(anfang),'-',num2str(ende),'_STot'));\n" //
                 + " STot2 = load('-ascii', strcat('HitranSpektrum_',hitran_input,'_sf(',num2str(sf),')_wn',num2str(anfang),'-',num2str(ende),'_STot2'));\n" //
-                + "endif\n" //
-                + "";
+                + "";                   
+        }
         octave.eval(hitran_spectrum);
 
         // caluclate Extinction
@@ -60,7 +60,8 @@ public class HitranWrapper {
         octave.eval("dist = 5.4;");  // distance in m (4.8 for Bruker Alpha, 5.33 for Bruker Matrix at 1ATM)
         octave.eval("Ext_Hitr = log10(e) * SgmvTot * nL * 296/Temp * dist*100;");  // SgmvTot in cm^2/(moleculeString*ATM), pressure in ATM, log10(e) = 0.43429
         octave.eval("AHitr = [grd, Ext_Hitr];");  // save as 2 column matrix
-        octave.eval("save('-ascii', 'HitranExtinktion', 'AHitr');");
+        String hitranExtinktion = String.format("save('-ascii', 'HitranExtinktion%d', 'AHitr');", inputParameter.getMolecule());
+        octave.eval(hitranExtinktion);
         octave.eval("integral_Extinction_Hitr = trapz(grd, Ext_Hitr);");  // should be a little less then pure sum of S
         octave.eval("Extinction_Hitr = log10(e) * STot * nL * 296/Temp * dist*100;");  // raw numbers from Hitran sum of S
     }
