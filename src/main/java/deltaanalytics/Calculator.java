@@ -41,7 +41,9 @@ public class Calculator {
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
         //calculator.firstTry();
-        calculator.secondTry();
+        //calculator.secondTry();
+        
+        calculator.startOctaveForOneMolecule(4);
 
     }//main
     
@@ -81,6 +83,7 @@ public class Calculator {
         List<Future<String>> resultList = new ArrayList<>();      
         
         List<Integer> molculeList = Arrays.asList(4, 5);
+
 
         long time1 = System.currentTimeMillis();        
         molculeList.stream().forEach((molecule) -> {
@@ -139,6 +142,8 @@ public class Calculator {
         SpectrumWrapper spectrumWrapper =
                 new SpectrumWrapper();
         spectrumWrapper.getFtirData(octave, brukerSpectrum);    
+
+
         
         LOGGER.info("Starte Levenberg-Marquardt nichtlineare Regression");
         LevenberqMarquartInputParameters lmParameters = 
