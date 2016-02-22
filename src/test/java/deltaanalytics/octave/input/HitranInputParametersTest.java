@@ -6,8 +6,18 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 
 public class HitranInputParametersTest {
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
     @Test
     public void checkMoleculeNumber_4(){
         int molecule = 4;
@@ -31,6 +41,16 @@ public class HitranInputParametersTest {
         
         assertThat(inputParameter.getMoleculeEval(), is(equalTo(expected)));
     }
+    @Test
+    public void getMoAndMoStrEval() {
+        HitranInputParameters inputParameter = new HitranInputParameters();
+        inputParameter.setMolecule(1);
+        String expected_Mo = "mo = 1;";
+        String expected_MoStr = "mo_str = H2O;";
+        
+        assertThat(inputParameter.getMoEval(), is(equalTo(expected_Mo)));
+        assertThat(inputParameter.getMoStrEval(), is(equalTo(expected_MoStr)));        
+    }    
     @Test
     public void getBaselineStepEval(){
         HitranInputParameters inputParameter = new HitranInputParameters();
@@ -73,5 +93,5 @@ public class HitranInputParametersTest {
         assertThat(inputParameter.getTempEval(), is(equalTo("Temp = 313.0;")));
         assertThat(inputParameter.getPatmEval(), is(equalTo("Patm = 1.0;")));
         assertThat(inputParameter.getDdEval(), is(equalTo("Dd = 5;")));
-    }
+    }    
 }

@@ -3,13 +3,14 @@ package deltaanalytics.octave.calculation;
 import deltaanalytics.octave.output.Result;
 import dk.ange.octave.OctaveEngine;
 import dk.ange.octave.type.OctaveDouble;
-import java.io.IOException;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.util.Precision;
 
 public class ResultWrapper {
     public Result outputResult(OctaveEngine octave) {
         Result result = new Result();
+        OctaveDouble mo = (OctaveDouble) octave.get("mo");
+        result.setMolecule((int) mo.get(1));
         
         result.setInitialGuess(new ArrayRealVector(((OctaveDouble) octave.get("pin")).getData()));
         result.setDp(new ArrayRealVector(((OctaveDouble) octave.get("dp")).getData()));
@@ -63,17 +64,12 @@ public class ResultWrapper {
     public void showGnuGraph(OctaveEngine octave) {
         octave.eval("graphics_toolkit ('gnuplot')");
         octave.eval("figure()");
-        octave.eval("title('Levenberg Marquart fit to FTIR spectrum');");
+        octave.eval("title('L. M. fit to FTIR spectrum');");
         octave.eval("plot(wav(idx1:idx2), ab_minus_offset, '-b;data baselin correctd;', wav(idx1:idx2), baseline_corr,'-r;baseline;', wav(idx1:idx2), (f1 - baseline_corr*p1(5)) - p1(1),'-k;output from LM fit;')");
         octave.eval("axis([min(wav(idx1:idx2)) max(wav(idx1:idx2)) min(ab_minus_offset) max(ab_minus_offset)*1.02]);");
         octave.eval("set(gca(),'XDir','reverse');");
         octave.eval("grid('minor')");
-        octave.eval("drawnow()");
-	try {
-        	System.in.read();
-    	} catch (IOException e) {
-        	e.printStackTrace();
-		octave.close();
-    	}        
+        octave.eval("legend(strcat('molecule=', mo_str));");
+        octave.eval("drawnow('expose')");      
     }
 }

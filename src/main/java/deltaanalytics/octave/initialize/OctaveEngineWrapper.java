@@ -6,9 +6,9 @@ import dk.ange.octave.OctaveEngineFactory;
 import java.io.File;
 
 public class OctaveEngineWrapper {
-    private static OctaveEngine octaveEngine;
+    private OctaveEngine octaveEngine;
 
-    public static OctaveEngine build(OctaveEngineFactory octaveEngineFactory, String octaveCliPath) {
+    public OctaveEngine build(OctaveEngineFactory octaveEngineFactory, String octaveCliPath) {
         if (octaveEngine == null) {
             OctaveEngineFactory factory = new OctaveEngineFactory();
             factory.setOctaveProgram(new File(octaveCliPath));  // "C:\\Octave\\Octave-4.0.0\\bin\\octave-cli"
@@ -18,7 +18,7 @@ public class OctaveEngineWrapper {
         return octaveEngine;
     }
 
-    public static void close() {
+    public void close() {
         if (octaveEngine != null) {
             octaveEngine.close();
         }

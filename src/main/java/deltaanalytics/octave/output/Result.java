@@ -3,6 +3,7 @@ package deltaanalytics.octave.output;
 import org.apache.commons.math3.linear.ArrayRealVector;
 
 public class Result {
+    private int molecule;
     private double mixingRatioFromIntegralUnderTheCurve;
     private double mixingRatioFromHitranSum;
     private double r2;
@@ -121,9 +122,33 @@ public class Result {
         this.dp = dp;
     }
 
+    public int getMolecule() {
+        return molecule;
+    }
+
+    public void setMolecule(int molecule) {
+        this.molecule = molecule;
+    }    
+    
     @Override
     public String toString() {
-        return "Result{" + "mixingRatioFromIntegralUnderTheCurve=" + mixingRatioFromIntegralUnderTheCurve + ", mixingRatioFromHitranSum=" + mixingRatioFromHitranSum + ", r2=" + r2 + ", TimeInSecForLevenbergMarquardtFit=" + TimeInSecForLevenbergMarquardtFit + ", fitParams=" + fitParams + ", estimatedFov=" + estimatedFov + ", fovLineShift=" + fovLineShift + ", additionalLineShift=" + additionalLineShift + ", effectiveResolution=" + effectiveResolution + ", amplitudeFitFactor=" + amplitudeFitFactor + ", offsetFitConstant=" + offsetFitConstant + ", initialGuess=" + initialGuess + ", dp=" + dp + '}';
+        return "Result{"
+                + "molecule=" + molecule
+                + ", mixingRatioFromIntegralUnderTheCurve=" + mixingRatioFromIntegralUnderTheCurve 
+                + ", mixingRatioFromHitranSum=" + mixingRatioFromHitranSum 
+                + ", r2=" + r2 
+                + ", TimeInSecForLevenbergMarquardtFit=" + TimeInSecForLevenbergMarquardtFit 
+                + ", fitParams=" + fitParams 
+                + ", estimatedFov=" + estimatedFov 
+                + ", fovLineShift=" + fovLineShift 
+                + ", additionalLineShift=" + additionalLineShift 
+                + ", effectiveResolution=" + effectiveResolution 
+                + ", amplitudeFitFactor=" + amplitudeFitFactor 
+                + ", offsetFitConstant=" + offsetFitConstant 
+                + ", initialGuess=" + initialGuess 
+                + ", dp=" + dp
+                + ", time in sec for fit=" + TimeInSecForLevenbergMarquardtFit 
+                + "}";
     }
     
 }

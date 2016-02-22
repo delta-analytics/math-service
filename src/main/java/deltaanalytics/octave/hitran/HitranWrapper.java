@@ -10,6 +10,8 @@ public class HitranWrapper {
         octaveEngine.eval(HitranInput.molWeights());   // Hitran molecular weights
         
         octaveEngine.eval(inputParameter.getMoleculeEval());  // hitran_input=
+        octaveEngine.eval(inputParameter.getMoEval());  // mo=
+        octaveEngine.eval(inputParameter.getMoStrEval());  // mo_str=
         octaveEngine.eval(inputParameter.getBaselineStepEval());  // baseline correction, baseline_step = 0: no correction, only offset
         octaveEngine.eval(inputParameter.getMolWeightEval());  // MW=
         octaveEngine.eval(inputParameter.getAnfangEval());  // anfang=
@@ -28,6 +30,8 @@ public class HitranWrapper {
 
         octaveEngine.eval(inputParameter.getNormalizeEvsEfilt());  // normalize the area under the curve after convolution
         //octaveEngine.eval("whos");
+        //octaveEngine.eval("type('mo')");        
+        //octaveEngine.eval("type('mo_str')");
     }
 
     public void getHitranData(OctaveEngine octave, HitranInputParameters inputParameter) {

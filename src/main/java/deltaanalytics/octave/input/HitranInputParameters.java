@@ -1,5 +1,6 @@
 package deltaanalytics.octave.input;
 
+import deltaanalytics.Calculator;
 import deltaanalytics.gui.math.HitranParameters;
 
 public class HitranInputParameters {
@@ -55,8 +56,16 @@ public class HitranInputParameters {
     }
     
     public String getMoleculeEval(){   //"hitran_input = hitran_input{molecule};"
-        return "hitran_input = hitran_input{" + getMolecule() + "};";
-    }     
+        return "hitran_input = hitran_input{" + getMolecule() + "};";                
+    }
+    
+    public String getMoEval(){
+        return "mo = " + getMolecule() + ";";
+    }
+    
+    public String getMoStrEval(){
+        return "mo_str = '" + Calculator.MOLECULE.get(getMolecule()-1) + "';";
+    }
 
     public int getBaselineStep() {
         return baselineStep;

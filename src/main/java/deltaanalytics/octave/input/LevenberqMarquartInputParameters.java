@@ -132,5 +132,15 @@ public class LevenberqMarquartInputParameters {
     public String getOptBoundsEval() {
         return "options.bounds = [minvalues', maxvalues'];";
     }
+
+    @Override
+    public String toString() {
+        return "LevenberqMarquartInputParameters{" 
+                + "dp=" + Arrays.toString(dp) + ", pin=" + Arrays.toString(pin)
+                + ", minValues=" + Arrays.toString(minValues) + ", maxValues=" + Arrays.toString(maxValues)
+                + ", stol=" + stol + ", niter=" + niter
+                + ", nlCorr=" + nlCorr
+                + "}";
+    }
        
 }
