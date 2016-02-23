@@ -1,13 +1,13 @@
 package deltaanalytics;
 
 import deltaanalytics.gui.math.HitranParameters;
-import deltaanalytics.gui.math.LevenbergMarquartParameters;
+import deltaanalytics.gui.math.LevenbergMarquardtParameters;
 import deltaanalytics.octave.calculation.LevenbergMarquardtWrapper;
 import deltaanalytics.octave.calculation.ResultWrapper;
 import deltaanalytics.octave.hitran.HitranWrapper;
 import deltaanalytics.octave.initialize.OctaveEngineWrapper;
 import deltaanalytics.octave.input.HitranInputParameters;
-import deltaanalytics.octave.input.LevenberqMarquartInputParameters;
+import deltaanalytics.octave.input.LevenberqMarquardtInputParameters;
 import deltaanalytics.octave.input.SpectrumInput;
 import deltaanalytics.octave.output.Result;
 import deltaanalytics.octave.spectrum.SpectrumWrapper;
@@ -29,13 +29,27 @@ import org.slf4j.LoggerFactory;
 
 public class Calculator {
     public static final List<String> MOLECULE = Arrays.asList("H2O", "CO2" ,"N2O", "CO", "CH4", "NO", "NO2");    
-    private static final String OCTAVE_CLI_PATH = "/usr/bin/octave-cli";  //"C:\\Octave\\Octave-4.0.0\\bin\\octave-cli";
+    private static String OCTAVE_CLI_PATH = "/usr/bin/octave-cli";  //"C:\\Octave\\Octave-4.0.0\\bin\\octave-cli";
     private static final Logger LOGGER = LoggerFactory.getLogger(Calculator.class);    
     
-    private static final int CORES = Runtime.getRuntime().availableProcessors();
+    //private static final int CORES = Runtime.getRuntime().availableProcessors();
     private static final ExecutorService SCHEDULER = Executors.newCachedThreadPool();  //newFixedThreadPool(CORES);
 
+    private List<Integer> moleculeList;
+    private HitranParameters hitranParameters;
+    private List<LevenbergMarquardtParameters> levenbergMarquardtParameterList;
     
+    public Calculator(List<Integer> integerList, HitranParameters hitranPars, List<LevenbergMarquardtParameters> lmParsList){
+        this.moleculeList = integerList;
+        this.hitranParameters = hitranPars;
+        this.levenbergMarquardtParameterList = lmParsList;
+    }
+
+    // constructor for main class
+    public Calculator(){   
+    }
+    
+    // main class for testing
     public static void main(String[] args) {
         List<Integer> molculeList = Arrays.asList(1,2,3,4,5);
 
@@ -76,37 +90,47 @@ public class Calculator {
     
     private Result startOctaveForOneMolecule(int molecule) {
         OctaveEngineWrapper octaveWrapper = new OctaveEngineWrapper();
-        OctaveEngine octave = octaveWrapper.build(new OctaveEngineFactory(), OCTAVE_CLI_PATH);
+        OctaveEngine octave = octaveWrapper.build(new OctaveEngineFactory(), getOCTAVE_CLI_PATH());
 
         // change to individual directory for each molecule
         octave.eval(String.format("cd lib%s%s", File.separator, MOLECULE.get(molecule-1)));
         
-        LOGGER.info("Hole HITRAN Daten für " + MOLECULE.get(molecule-1));        
+        LOGGER.info("Hole HITRAN Daten für " + MOLECULE.get(molecule-1));     
         HitranInputParameters inputParameter = 
-                new HitranInputParameters(new HitranParameters(), molecule);
-        HitranWrapper hitranWrapper =
-                new HitranWrapper();
+                new HitranInputParameters(
+                        hitranParameters == null ?
+                        new HitranParameters() : hitranParameters, molecule);
+        
+        HitranWrapper hitranWrapper = new HitranWrapper();
+        
         hitranWrapper.initialize(octave, inputParameter);
         hitranWrapper.getHitranData(octave, inputParameter);
 
         LOGGER.info("Hole Bruker Spektrum");
         // @ToDo inject the actual file
-        String brukerFileName = "'Test1.10.dpt'";
-        SpectrumInput brukerSpectrum =
-                new SpectrumInput();
+        String brukerFileName = "'Test1.10.dpt'";       
+        SpectrumInput brukerSpectrum = new SpectrumInput();      
         brukerSpectrum.setDataPointTableFile(brukerFileName);
-        SpectrumWrapper spectrumWrapper =
-                new SpectrumWrapper();
+        
+        SpectrumWrapper spectrumWrapper = new SpectrumWrapper();       
         spectrumWrapper.getFtirData(octave, brukerSpectrum);    
        
         LOGGER.info("Starte Levenberg-Marquardt nichtlineare Regression");
-        LevenberqMarquartInputParameters lmParameters = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters lmParameters = 
+                new LevenberqMarquardtInputParameters(
+                        levenbergMarquardtParameterList == null ?
+                            new LevenbergMarquardtParameters(molecule) :
+                                levenbergMarquardtParameterList
+                                    .stream()
+                                    .filter(lmPars -> lmPars.getMolecule() == molecule)
+                                    .findFirst()
+                                    .get());
+        
         LevenbergMarquardtWrapper levenbergMarquardtWrapper = new LevenbergMarquardtWrapper();
         levenbergMarquardtWrapper.initializeLevenbergMarquardt(octave, lmParameters);
         levenbergMarquardtWrapper.startLevenbergMarquardt(octave);
 
-        LOGGER.info("Übergebe Ergebnisse für " + MOLECULE.get(molecule-1));
+        LOGGER.info("Übergebe der Ergebnisse für " + MOLECULE.get(molecule-1));
         ResultWrapper resultWrapper = new ResultWrapper();
         Result result = resultWrapper.outputResult(octave);
      
@@ -125,5 +149,13 @@ public class Calculator {
         
         return result;
     }
+    
+    public static String getOCTAVE_CLI_PATH() {
+        return OCTAVE_CLI_PATH;
+    }
+
+    public static void setOCTAVE_CLI_PATH(String aOCTAVE_CLI_PATH) {
+        OCTAVE_CLI_PATH = aOCTAVE_CLI_PATH;
+    }    
     
 }

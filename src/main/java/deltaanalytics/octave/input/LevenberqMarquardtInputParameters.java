@@ -1,11 +1,12 @@
 package deltaanalytics.octave.input;
 
 import java.util.Arrays;
-import deltaanalytics.gui.math.LevenbergMarquartParameters;
+import deltaanalytics.gui.math.LevenbergMarquardtParameters;
 
 
-public class LevenberqMarquartInputParameters {
+public class LevenberqMarquardtInputParameters {
     private final int LINEARSIZE = 6;  // reduce array size from 8 to 6 if nlCorr = false
+    private int molecule;
     private double[] dp;
     private double[] pin;
     private double[] minValues;
@@ -14,11 +15,12 @@ public class LevenberqMarquartInputParameters {
     private int niter;  // max number of iterations
     private boolean nlCorr;  // non linear correction  yes/no
     
-    public LevenberqMarquartInputParameters() {
+    public LevenberqMarquardtInputParameters() {
         
     }
 
-    public LevenberqMarquartInputParameters(LevenbergMarquartParameters LmPars){
+    public LevenberqMarquardtInputParameters(LevenbergMarquardtParameters LmPars){
+        this.molecule = LmPars.getMolecule();
         this.nlCorr = LmPars.isNlCorr();
 
         if(this.nlCorr == true){
@@ -142,5 +144,13 @@ public class LevenberqMarquartInputParameters {
                 + ", nlCorr=" + nlCorr
                 + "}";
     }
+
+    public int getMolecule() {
+        return molecule;
+    }
+
+    public void setMolecule(int molecule) {
+        this.molecule = molecule;
+    }  
        
 }

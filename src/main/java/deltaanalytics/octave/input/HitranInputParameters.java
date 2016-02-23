@@ -208,5 +208,5 @@ public class HitranInputParameters {
                 + ", sf=" + sf
                 + ", Temp=" + Temp + ", Patm=" + Patm
                 + ", Dd=" + Dd + '}';
-    }
+    }   
 }

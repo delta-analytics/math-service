@@ -46,7 +46,7 @@ public class HitranInputParametersTest {
         HitranInputParameters inputParameter = new HitranInputParameters();
         inputParameter.setMolecule(1);
         String expected_Mo = "mo = 1;";
-        String expected_MoStr = "mo_str = H2O;";
+        String expected_MoStr = "mo_str = 'H2O';";
         
         assertThat(inputParameter.getMoEval(), is(equalTo(expected_Mo)));
         assertThat(inputParameter.getMoStrEval(), is(equalTo(expected_MoStr)));        

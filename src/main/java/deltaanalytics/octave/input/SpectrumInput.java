@@ -11,7 +11,6 @@ public class SpectrumInput {
     }
     public String getDataFileEval(){
         return "ftir_data = " + getDataPointTableFile() + ";";
-    }
-    
+    }  
     
 }

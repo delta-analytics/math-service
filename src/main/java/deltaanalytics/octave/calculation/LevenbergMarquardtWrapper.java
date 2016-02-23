@@ -1,13 +1,14 @@
 package deltaanalytics.octave.calculation;
 
 import dk.ange.octave.OctaveEngine;
-import deltaanalytics.octave.input.LevenberqMarquartInputParameters;
+import deltaanalytics.octave.input.LevenberqMarquardtInputParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LevenbergMarquardtWrapper {
-    private Logger LOGGER = LoggerFactory.getLogger(LevenbergMarquardtWrapper.class);    
-    public void initializeLevenbergMarquardt(OctaveEngine octave, LevenberqMarquartInputParameters lmParameters) {
+    private final Logger LOGGER = LoggerFactory.getLogger(LevenbergMarquardtWrapper.class);
+    
+    public void initializeLevenbergMarquardt(OctaveEngine octave, LevenberqMarquardtInputParameters lmParameters) {
         // parameters for Levenberg Marquardt
         // dp = fractional incr of p for numerical partials in dfdp, default= .001*ones(size(pin)), if dp=0 parameter is fixed
         octave.eval(lmParameters.getFdefEval());

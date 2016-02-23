@@ -1,31 +1,18 @@
 package deltaanalytics.octave.input;
 
-import deltaanalytics.gui.math.LevenbergMarquartParameters;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import deltaanalytics.gui.math.LevenbergMarquardtParameters;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class LevenberqMarquartInputParametersTest {
-    
-    public LevenberqMarquartInputParametersTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+public class LevenberqMarquardtInputParametersTest {
+        
     /**
-     * Test of getStolEval method, of class LevenberqMarquartInputParameters.
+     * Test of getStolEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetStolEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "stol = 1.0E-4;";
         String result = instance.getStolEval();
@@ -33,12 +20,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getNiterEval method, of class LevenberqMarquartInputParameters.
+     * Test of getNiterEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetNiterEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "niter = 15;";
         String result = instance.getNiterEval();
@@ -46,14 +33,14 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getDpEval method, of class LevenberqMarquartInputParameters.
+     * Test of getDpEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetDpEvalNlCorrFalse() {
-        LevenbergMarquartParameters lmp = new LevenbergMarquartParameters();
+        LevenbergMarquardtParameters lmp = new LevenbergMarquardtParameters(1);
      
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(lmp);
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(lmp);
 
         String expResult = "dp = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01];";
         String result = instance.getDpEval();
@@ -61,14 +48,14 @@ public class LevenberqMarquartInputParametersTest {
         assertEquals(instance.getDp().length, 6);
     }
     /**
-     * Test of getDpEval method, of class LevenberqMarquartInputParameters.
+     * Test of getDpEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetDpEvalNlCorrTrue() {
-        LevenbergMarquartParameters lmp = new LevenbergMarquartParameters();
+        LevenbergMarquardtParameters lmp = new LevenbergMarquardtParameters(1);
         lmp.setNlCorr(true);
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(lmp);
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(lmp);
 
         String expResult = "dp = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01];";
         String result = instance.getDpEval();
@@ -76,12 +63,12 @@ public class LevenberqMarquartInputParametersTest {
     }    
 
     /**
-     * Test of getPinEval method, of class LevenberqMarquartInputParameters.
+     * Test of getPinEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetPinEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "pin = [1.0E-4, 1.0, 0.0225, 2.0E-6, 0.0, 0.0];";
         String result = instance.getPinEval();
@@ -89,12 +76,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getMinValuesEval method, of class LevenberqMarquartInputParameters.
+     * Test of getMinValuesEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetMinValuesEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "minvalues = [-0.1, 0.5, 0.005, 0.0, 0.0, -0.1];";
         String result = instance.getMinValuesEval();
@@ -103,12 +90,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getMaxValuesEval method, of class LevenberqMarquartInputParameters.
+     * Test of getMaxValuesEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetMaxValuesEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
 
         String expResult = "maxvalues = [0.1, 2.0, 0.04, 0.001, 1.0, 0.1];";
         String result = instance.getMaxValuesEval();
@@ -116,12 +103,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getBaselineEval method, of class LevenberqMarquartInputParameters.
+     * Test of getBaselineEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetBaselineEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "if(baseline_step == 0), dp(5) = 0; end";
         String result = instance.getBaselineEval();
@@ -129,12 +116,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getDfdpEval method, of class LevenberqMarquartInputParameters.
+     * Test of getDfdpEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetDfdpEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "dFdp = 'dfdp';";
         String result = instance.getDfdpEval();
@@ -142,12 +129,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getStatWeightsEval method, of class LevenberqMarquartInputParameters.
+     * Test of getStatWeightsEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetStatWeightsEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "wt1 = ones(length(wav(idx1:idx2)),1);";
         String result = instance.getStatWeightsEval();
@@ -155,12 +142,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getMinstepEval method, of class LevenberqMarquartInputParameters.
+     * Test of getMinstepEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetMinstepEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "minstep = ones(length(pin),1)*0;";
         String result = instance.getMinstepEval();
@@ -168,12 +155,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getMaxstepEval method, of class LevenberqMarquartInputParameters.
+     * Test of getMaxstepEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetMaxstepEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "maxstep = ones(length(pin),1)*Inf;";
         String result = instance.getMaxstepEval();
@@ -181,12 +168,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getOptFractPrecisionEval method, of class LevenberqMarquartInputParameters.
+     * Test of getOptFractPrecisionEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetOptFractPrecisionEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "options.fract_prec = minstep;";
         String result = instance.getOptFractPrecisionEval();
@@ -194,12 +181,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getOptFractChangeEval method, of class LevenberqMarquartInputParameters.
+     * Test of getOptFractChangeEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetOptFractChangeEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "options.fract_change = maxstep;";
         String result = instance.getOptFractChangeEval();
@@ -207,12 +194,12 @@ public class LevenberqMarquartInputParametersTest {
     }
 
     /**
-     * Test of getOptBoundsEval method, of class LevenberqMarquartInputParameters.
+     * Test of getOptBoundsEval method, of class LevenberqMarquardtInputParameters.
      */
     @Test
     public void testGetOptBoundsEval() {
-        LevenberqMarquartInputParameters instance = 
-                new LevenberqMarquartInputParameters(new LevenbergMarquartParameters());
+        LevenberqMarquardtInputParameters instance = 
+                new LevenberqMarquardtInputParameters(new LevenbergMarquardtParameters(1));
         
         String expResult = "options.bounds = [minvalues', maxvalues'];";
         String result = instance.getOptBoundsEval();
