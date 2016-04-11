@@ -54,8 +54,6 @@
             <groupId>kenai</groupId>
             <artifactId>Octave</artifactId>
             <version>0.6.4</version>
-            <!--<scope>system</scope>
-            <systemPath>${basedir}/lib/javaoctave-0.6.4.jar</systemPath>  -->
         </dependency>
         
         <dependency>
