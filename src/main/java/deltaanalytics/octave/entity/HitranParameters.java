@@ -8,6 +8,7 @@ import java.util.Arrays;
 @Entity
 public class HitranParameters {
     private long id;
+    private boolean currentDefault;
     private boolean[] callHitran;  // which moleclue to investigate 1=H2O  2=CO2  3=N2O  4=CO  5=CH4  6=NO  7=NO2
     private double[] lowWN;  // low wavenumbers
     private double[] highWN;  // high wavenumbers
@@ -46,6 +47,14 @@ public class HitranParameters {
         this.Temp = 313;
         this.Patm = 1;
         this.Dd = new int[] {5, 5, 5, 5, 5, 5, 5};
+    }
+
+    public boolean isCurrentDefault() {
+        return currentDefault;
+    }
+
+    public void setCurrentDefault(boolean currentDefault) {
+        this.currentDefault = currentDefault;
     }
 
     public boolean[] getCallHitran() {

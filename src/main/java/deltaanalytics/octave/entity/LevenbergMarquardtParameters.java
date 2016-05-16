@@ -8,6 +8,7 @@ import java.util.Arrays;
 @Entity
 public class LevenbergMarquardtParameters {
     private long id;
+    private boolean currentDefault;
     private int molecule;
     private double[] dp;  // initial fractional change in parameter
     private double[] pin;  // initial parameter input
@@ -25,6 +26,14 @@ public class LevenbergMarquardtParameters {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isCurrentDefault() {
+        return currentDefault;
+    }
+
+    public void setCurrentDefault(boolean currentDefault) {
+        this.currentDefault = currentDefault;
     }
 
     public LevenbergMarquardtParameters() {
