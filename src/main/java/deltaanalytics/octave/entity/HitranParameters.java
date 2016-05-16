@@ -1,12 +1,13 @@
-package deltaanalytics.octave.dto;
+package deltaanalytics.octave.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Arrays;
 
-/** ToDo get parameters from GUI
- *  vector of initial parameters for use of Hitran data base
- *  base class for all molecules
- */
+@Entity
 public class HitranParameters {
+    private long id;
     private boolean[] callHitran;  // which moleclue to investigate 1=H2O  2=CO2  3=N2O  4=CO  5=CH4  6=NO  7=NO2
     private double[] lowWN;  // low wavenumbers
     private double[] highWN;  // high wavenumbers
@@ -20,6 +21,16 @@ public class HitranParameters {
     private double Temp;  // default = 313 Kelvin; Temperature 40 °C
     private double Patm;  // default = 1 atm; total Pressure in ATM units
     private int[] Dd;  // default = 5; wings of each line in wavenumbers of cm-1
+
+    @Id
+    @GeneratedValue
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public HitranParameters(){
         this.callHitran = new boolean[] {false, false, false, false, false, false, false};

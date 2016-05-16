@@ -1,17 +1,13 @@
-package deltaanalytics.octave.dto;
+package deltaanalytics.octave.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Arrays;
 
-/**
- * ToDo get parameters from GUI
- * base class for one molecule
- * vector of initial parameters for vectors pin, dp, minValues and maxValues:  6 or 8 items
- * nlCorr = false (parameter length 6)
- * - offset, resolution, FOV, mixing ratio, baseline scale, wavenumber shift
- * nlCorr = true (parameter length 8)
- * - offset, resolution, FOV, mixing ratio, baseline scale, wavenumber shift, 2 polynomial constants... e.g. -1e-5; 1e-10;
- */
+@Entity
 public class LevenbergMarquardtParameters {
+    private long id;
     private int molecule;
     private double[] dp;  // initial fractional change in parameter
     private double[] pin;  // initial parameter input
@@ -20,6 +16,16 @@ public class LevenbergMarquardtParameters {
     private double stol;  // tolerance criterium of aborting fit
     private int niter;  // max number of iterations
     private boolean nlCorr;  // nonlinear correction for spectrum
+
+    @Id
+    @GeneratedValue
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public LevenbergMarquardtParameters() {
         init();
