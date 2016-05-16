@@ -1,6 +1,6 @@
 package deltaanalytics.octave.input;
 
-import deltaanalytics.gui.math.LevenbergMarquardtParameters;
+import deltaanalytics.octave.dto.LevenbergMarquardtParameters;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

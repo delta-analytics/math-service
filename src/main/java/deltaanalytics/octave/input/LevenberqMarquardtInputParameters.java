@@ -1,7 +1,8 @@
 package deltaanalytics.octave.input;
 
+import deltaanalytics.octave.dto.LevenbergMarquardtParameters;
+
 import java.util.Arrays;
-import deltaanalytics.gui.math.LevenbergMarquardtParameters;
 
 
 public class LevenberqMarquardtInputParameters {
