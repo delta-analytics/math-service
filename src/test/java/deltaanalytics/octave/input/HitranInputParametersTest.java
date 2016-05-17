@@ -1,6 +1,6 @@
 package deltaanalytics.octave.input;
 
-import deltaanalytics.gui.math.HitranParameters;
+import deltaanalytics.octave.entity.HitranParameters;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;

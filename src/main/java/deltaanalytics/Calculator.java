@@ -1,9 +1,9 @@
 package deltaanalytics;
 
-import deltaanalytics.gui.math.HitranParameters;
-import deltaanalytics.gui.math.LevenbergMarquardtParameters;
 import deltaanalytics.octave.calculation.LevenbergMarquardtWrapper;
 import deltaanalytics.octave.calculation.ResultWrapper;
+import deltaanalytics.octave.entity.HitranParameters;
+import deltaanalytics.octave.entity.LevenbergMarquardtParameters;
 import deltaanalytics.octave.hitran.HitranWrapper;
 import deltaanalytics.octave.initialize.OctaveEngineWrapper;
 import deltaanalytics.octave.input.HitranInputParameters;

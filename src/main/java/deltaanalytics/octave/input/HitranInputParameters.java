@@ -1,7 +1,7 @@
 package deltaanalytics.octave.input;
 
 import deltaanalytics.Calculator;
-import deltaanalytics.gui.math.HitranParameters;
+import deltaanalytics.octave.entity.HitranParameters;
 
 public class HitranInputParameters {
     private boolean callHitran;  // which moleclue to investigate 1=H2O  2=CO2  3=N2O  4=CO  5=CH4  6=NO  7=NO2
