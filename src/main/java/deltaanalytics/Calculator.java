@@ -51,7 +51,7 @@ public class Calculator {
     
     // main class for testing
     public static void main(String[] args) {
-        List<Integer> molculeList = Arrays.asList(1, 2, 3, 4, 5, 6);
+        List<Integer> molculeList = Arrays.asList(4);
 
         new Calculator().doCalculations(molculeList);         
     }
