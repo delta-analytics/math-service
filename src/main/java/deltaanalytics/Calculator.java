@@ -38,11 +38,13 @@ public class Calculator {
     private List<Integer> moleculeList;
     private HitranParameters hitranParameters;
     private List<LevenbergMarquardtParameters> levenbergMarquardtParameterList;
+    private String brukerFileName = "'Test1.10.dpt'";   // test file
     
-    public Calculator(List<Integer> integerList, HitranParameters hitranPars, List<LevenbergMarquardtParameters> lmParsList){
+    public Calculator(List<Integer> integerList, HitranParameters hitranPars, List<LevenbergMarquardtParameters> lmParsList, String brukerFileName){
         this.moleculeList = integerList;
         this.hitranParameters = hitranPars;
         this.levenbergMarquardtParameterList = lmParsList;
+        this.brukerFileName = brukerFileName;
     }
 
     // constructor for main class
@@ -51,7 +53,7 @@ public class Calculator {
     
     // main class for testing
     public static void main(String[] args) {
-        List<Integer> molculeList = Arrays.asList(4);
+        List<Integer> molculeList = Arrays.asList(4, 5);
 
         new Calculator().doCalculations(molculeList);         
     }
@@ -106,9 +108,7 @@ public class Calculator {
         hitranWrapper.initialize(octave, inputParameter);
         hitranWrapper.getHitranData(octave, inputParameter);
 
-        LOGGER.info("Hole Bruker Spektrum");
-        // @ToDo inject the actual file
-        String brukerFileName = "'Test1.10.dpt'";       
+        LOGGER.info("Hole Bruker Spektrum");      
         SpectrumInput brukerSpectrum = new SpectrumInput();      
         brukerSpectrum.setDataPointTableFile(brukerFileName);
         
