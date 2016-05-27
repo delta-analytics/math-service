@@ -2,6 +2,8 @@ package deltaanalytics;
 
 import deltaanalytics.octave.calculation.LevenbergMarquardtWrapper;
 import deltaanalytics.octave.calculation.ResultWrapper;
+import deltaanalytics.octave.dto.JuekeMathParametersDto;
+import deltaanalytics.octave.dto.MeasureSampleDto;
 import deltaanalytics.octave.entity.HitranParameters;
 import deltaanalytics.octave.entity.LevenbergMarquardtParameters;
 import deltaanalytics.octave.hitran.HitranWrapper;
@@ -10,6 +12,8 @@ import deltaanalytics.octave.input.HitranInputParameters;
 import deltaanalytics.octave.input.LevenberqMarquardtInputParameters;
 import deltaanalytics.octave.input.SpectrumInput;
 import deltaanalytics.octave.output.Result;
+import deltaanalytics.octave.repositories.HitranParametersRepository;
+import deltaanalytics.octave.repositories.LevenberqMarquardtParametersRepository;
 import deltaanalytics.octave.spectrum.SpectrumWrapper;
 import dk.ange.octave.OctaveEngine;
 import dk.ange.octave.OctaveEngineFactory;
@@ -25,6 +29,7 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -43,33 +48,26 @@ public class Calculator {
     private List<LevenbergMarquardtParameters> levenbergMarquardtParameterList;
     private String brukerFileName = "'Test1.10.dpt'";   // test file
     
-    public Calculator(List<Integer> integerList, HitranParameters hitranPars, List<LevenbergMarquardtParameters> lmParsList, String brukerFileName){
-        this.moleculeList = integerList;
-        this.hitranParameters = hitranPars;
-        this.levenbergMarquardtParameterList = lmParsList;
-        this.brukerFileName = brukerFileName;
-    }
-
-    // constructor for main class
-    public Calculator(){   
-    }
+    @Autowired
+    private HitranParametersRepository hitranParametersRepository;
     
-    // main class for testing
-    public static void main(String[] args) {
-        List<Integer> molculeList = Arrays.asList(4, 5);
-
-        new Calculator().doCalculations(molculeList);         
-    }
-    
-    private void doCalculations(List<Integer> moleculeList) {
-        try {           
+    @Autowired
+    private LevenberqMarquardtParametersRepository levenberqMarquardtParametersRepository;
+        
+    public void doCalculations(List<Integer> moleculeList, Long measuresampleId) {
+        try {
+            // ToDo hole measureSample Object / Bruker-service
+            // ToDo hole Temp und Patm aus  bzw Jüke-service
+            HitranParameters hitranParameters = hitranParametersRepository.findByCurrentDefaultTrue();
+            LevenbergMarquardtParameters levenbergMarquardtParameters = levenberqMarquardtParametersRepository.findByCurrentDefaultTrue();
+            
             List<Callable<Result>> callables = new ArrayList<>();
                       
             moleculeList
                 .stream()
                 .forEach((Integer molecule) -> {
                     callables.add((Callable<Result>) () 
-                            -> startOctaveForOneMolecule(molecule)); //executeCommand(String.format("ping -c %d google.com", molecule)));
+                            -> startOctaveForOneMolecule(molecule, new JuekeMathParametersDto(), new MeasureSampleDto(), hitranParameters, levenbergMarquardtParameters )); //executeCommand(String.format("ping -c %d google.com", molecule)));
                 });
             
             SCHEDULER
@@ -93,18 +91,21 @@ public class Calculator {
     }
     
     
-    private Result startOctaveForOneMolecule(int molecule) {
+    private Result startOctaveForOneMolecule(
+                        int molecule, 
+                        JuekeMathParametersDto juekeMathParametersDto,
+                        MeasureSampleDto measureSampleDto,
+                        HitranParameters hitranParameters,
+                        LevenbergMarquardtParameters levenbergMarquardtParameters) {
         OctaveEngineWrapper octaveWrapper = new OctaveEngineWrapper();
         OctaveEngine octave = octaveWrapper.build(new OctaveEngineFactory(), this.octaveCliPath);
 
         // change to individual directory for each molecule
         octave.eval(String.format("cd lib%s%s", File.separator, MOLECULE.get(molecule-1)));
         
-        LOGGER.info("Hole HITRAN Daten für " + MOLECULE.get(molecule-1));     
+        LOGGER.info("Hole HITRAN Daten für " + MOLECULE.get(molecule-1));           
         HitranInputParameters inputParameter = 
-                new HitranInputParameters(
-                        hitranParameters == null ?
-                        new HitranParameters() : hitranParameters, molecule);
+                new HitranInputParameters(hitranParameters, molecule);
         
         HitranWrapper hitranWrapper = new HitranWrapper();
         
@@ -120,14 +121,7 @@ public class Calculator {
        
         LOGGER.info("Starte Levenberg-Marquardt nichtlineare Regression");
         LevenberqMarquardtInputParameters lmParameters = 
-                new LevenberqMarquardtInputParameters(
-                        levenbergMarquardtParameterList == null ?
-                            new LevenbergMarquardtParameters(molecule) :
-                                levenbergMarquardtParameterList
-                                    .stream()
-                                    .filter(lmPars -> lmPars.getMolecule() == molecule)
-                                    .findFirst()
-                                    .get());
+                new LevenberqMarquardtInputParameters(levenbergMarquardtParameters);
         
         LevenbergMarquardtWrapper levenbergMarquardtWrapper = new LevenbergMarquardtWrapper();
         levenbergMarquardtWrapper.initializeLevenbergMarquardt(octave, lmParameters);

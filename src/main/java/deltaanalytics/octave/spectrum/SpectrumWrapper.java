@@ -5,7 +5,7 @@ import deltaanalytics.octave.input.SpectrumInput;
 
 public class SpectrumWrapper {
     public void getFtirData(OctaveEngine octave, SpectrumInput brukerSpectrum) {
-        // ftir data
+        // ftir data   USE file name form measureSampleDto aus math-service
         octave.eval(brukerSpectrum.getDataFileEval());  // 'ftir_data=Path_to_Bruker_dpt_File'
         octave.eval("FTIR_AB = load('-ascii', ftir_data);");   // name of matrix is FTIR_AB: columns of data, 1st wavenumber. 2nd absorbance
         octave.eval("N = length(FTIR_AB(:,1));");
