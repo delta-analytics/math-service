@@ -25,11 +25,14 @@ import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class Calculator {
-    public static final List<String> MOLECULE = Arrays.asList("H2O", "CO2" ,"N2O", "CO", "CH4", "NO", "NO2");    
-    private static String OCTAVE_CLI_PATH = "/usr/bin/octave-cli";  //"C:\\Octave\\Octave-4.0.0\\bin\\octave-cli";
+    public static final List<String> MOLECULE = Arrays.asList("H2O", "CO2" ,"N2O", "CO", "CH4", "NO", "NO2");
+    @Value("${octaveCliPath}")    
+    private static String octaveCliPath; // Linux "/usr/bin/octave-cli"; Win "C:\\Octave\\Octave-4.0.0\\bin\\octave-cli";
     private static final Logger LOGGER = LoggerFactory.getLogger(Calculator.class);    
     
     //private static final int CORES = Runtime.getRuntime().availableProcessors();
@@ -92,7 +95,7 @@ public class Calculator {
     
     private Result startOctaveForOneMolecule(int molecule) {
         OctaveEngineWrapper octaveWrapper = new OctaveEngineWrapper();
-        OctaveEngine octave = octaveWrapper.build(new OctaveEngineFactory(), getOCTAVE_CLI_PATH());
+        OctaveEngine octave = octaveWrapper.build(new OctaveEngineFactory(), this.octaveCliPath);
 
         // change to individual directory for each molecule
         octave.eval(String.format("cd lib%s%s", File.separator, MOLECULE.get(molecule-1)));
@@ -149,13 +152,5 @@ public class Calculator {
         
         return result;
     }
-    
-    public static String getOCTAVE_CLI_PATH() {
-        return OCTAVE_CLI_PATH;
-    }
-
-    public static void setOCTAVE_CLI_PATH(String aOCTAVE_CLI_PATH) {
-        OCTAVE_CLI_PATH = aOCTAVE_CLI_PATH;
-    }    
     
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/calculation")
 public class CalculationController {
     private static final Logger logger = LoggerFactory.getLogger(CalculationController.class);
+    
     @RequestMapping(value = "/start/{measurementid}", method = RequestMethod.POST)
     public void startCalculationFor(@PathVariable("measurementid") Long measurementId) {
         logger.info("startCalculationFor " + measurementId);
