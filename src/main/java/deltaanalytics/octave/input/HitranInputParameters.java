@@ -22,21 +22,21 @@ public class HitranInputParameters {
     public HitranInputParameters(){   
     }
     
-    public HitranInputParameters(HitranParameters hitranPars, int molecule) {
-        this.callHitran = hitranPars.getCallHitran()[molecule - 1];
-        this.lowWN = hitranPars.getLowWN()[molecule - 1];
-        this.highWN = hitranPars.getHighWN()[molecule - 1];
-        this.molecule = molecule;
-        this.baselineStep = hitranPars.getBaselineStep()[molecule - 1];
-        this.stp = hitranPars.getStp()[molecule - 1];
+    public HitranInputParameters(HitranParameters hitranPars) {
+        this.callHitran = hitranPars.getCallHitran();
+        this.lowWN = hitranPars.getLowWN();
+        this.highWN = hitranPars.getHighWN();
+        this.molecule = hitranPars.getMolecule();
+        this.baselineStep = hitranPars.getBaselineStep();
+        this.stp = hitranPars.getStp();
         this.intensThres1 = hitranPars.getIntensThres1();
         this.isotopo1 = hitranPars.getIsotopo1();
         this.intensThres2 = hitranPars.getIntensThres2();
         this.isotopo2 = hitranPars.getIsotopo2();
-        this.sf = hitranPars.getSf()[molecule - 1];
+        this.sf = hitranPars.getSf();
         this.Temp = hitranPars.getTemp();
         this.Patm = hitranPars.getPatm();
-        this.Dd = hitranPars.getDd()[molecule - 1];
+        this.Dd = hitranPars.getDd();
     }
       
     public boolean getCallHitran() {

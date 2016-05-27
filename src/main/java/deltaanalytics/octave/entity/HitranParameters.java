@@ -3,7 +3,6 @@ package deltaanalytics.octave.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Arrays;
 
 @Entity
 public class HitranParameters {
@@ -49,6 +48,14 @@ public class HitranParameters {
 //        this.Patm = 1;
 //        this.Dd = new int[] {5, 5, 5, 5, 5, 5, 5};
     }
+    
+    public int getMolecule() {
+        return molecule;
+    }
+
+    public void setMolecule(int molecule) {
+        this.molecule = molecule;
+    }    
 
     public boolean isCurrentDefault() {
         return currentDefault;

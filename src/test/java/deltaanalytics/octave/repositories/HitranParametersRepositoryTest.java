@@ -23,7 +23,7 @@ public class HitranParametersRepositoryTest {
     @Test
     public void save() throws Exception {
         HitranParameters hitranParameters = new HitranParameters();
-        int[] baselineStep = {1, 2, 3};
+        int baselineStep = 1;
         hitranParameters.setBaselineStep(baselineStep);
 
         hitranParametersRepository.save(hitranParameters);

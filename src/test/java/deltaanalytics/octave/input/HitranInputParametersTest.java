@@ -22,7 +22,7 @@ public class HitranInputParametersTest {
     public void checkMoleculeNumber_4(){
         int molecule = 4;
         HitranParameters input = new HitranParameters();
-        input.setCallHitran(new boolean[] {false, false, false, true, false, false, false});
+        input.setCallHitran(false);
 
         HitranInputParameters inputParameter = new HitranInputParameters(input, molecule);
         
