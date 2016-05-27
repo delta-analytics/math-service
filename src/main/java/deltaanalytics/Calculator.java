@@ -105,7 +105,7 @@ public class Calculator {
         
         LOGGER.info("Hole HITRAN Daten für " + MOLECULE.get(molecule-1));           
         HitranInputParameters inputParameter = 
-                new HitranInputParameters(hitranParameters, molecule);
+                new HitranInputParameters(hitranParameters);
         
         HitranWrapper hitranWrapper = new HitranWrapper();
         

@@ -20,13 +20,13 @@ public class HitranInputParametersTest {
     }
     @Test
     public void checkMoleculeNumber_4(){
-        int molecule = 4;
         HitranParameters input = new HitranParameters();
         input.setCallHitran(false);
+        input.setMolecule(4);
 
-        HitranInputParameters inputParameter = new HitranInputParameters(input, molecule);
+        HitranInputParameters inputParameter = new HitranInputParameters(input);
         
-        assertThat(inputParameter.getMolecule(), is(equalTo(molecule)));
+        assertThat(inputParameter.getMolecule(), is(equalTo(4)));
         assertThat(inputParameter.getLowWN(), is(equalTo(2080.0)));
         assertThat(inputParameter.getHighWN(), is(equalTo(2141.0))); 
         assertThat(inputParameter.getBaselineStep(), is(equalTo(0)));
@@ -82,7 +82,7 @@ public class HitranInputParametersTest {
     @Test 
     public void getAllOthers(){
         HitranParameters input = new HitranParameters();
-        HitranInputParameters inputParameter = new HitranInputParameters(input, 4);
+        HitranInputParameters inputParameter = new HitranInputParameters(input);
 
         assertThat(inputParameter.getStpEval(), is(equalTo("stp = 0.02;")));
         assertThat(inputParameter.getSfEval(), is(equalTo("sf = 1.0;")));
