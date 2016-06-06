@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/levenberg")
 public class LevenberqMarquardtParametersController {
@@ -20,7 +22,7 @@ public class LevenberqMarquardtParametersController {
 
     @RequestMapping("")
     @ResponseBody
-    public LevenbergMarquardtParameters getActualHitran() {
+    public List<LevenbergMarquardtParameters> getActualHitran() {
         logger.info("getActualLevenbergMarquardtParameters");
         return levenberqMarquardtParametersRepository.findByCurrentDefaultTrue();
     }

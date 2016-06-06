@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/hitran")
 public class HitranParameterController {
@@ -20,7 +22,7 @@ public class HitranParameterController {
 
     @RequestMapping("")
     @ResponseBody
-    public HitranParameters getActualHitran() {
+    public List<HitranParameters> getActualHitran() {
         logger.info("getActualHitranParameters");
         return hitranParametersRepository.findByCurrentDefaultTrue();
     }
