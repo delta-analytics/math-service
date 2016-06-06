@@ -12,7 +12,7 @@ public class HitranParametersRepositoryImpl implements HitranParametersRepositor
     @Override
     public void saveAndMarkNewDefaults(HitranParameters hitranParameters) {
         LOGGER.info("saveAndMarkNewDefaults " + hitranParameters);
-        HitranParameters actualDefaults = hitranParametersRepository.findByCurrentDefaultTrue();
+        HitranParameters actualDefaults = hitranParametersRepository.findByCurrentDefaultTrueAndMolecule(hitranParameters.getMolecule());
         if (actualDefaults != null) {
             LOGGER.info("actualDefaults before " + actualDefaults);
             actualDefaults.setCurrentDefault(false);

@@ -12,7 +12,7 @@ public class LevenberqMarquardtParametersRepositoryImpl implements LevenberqMarq
     @Override
     public void saveAndMarkNewDefaults(LevenbergMarquardtParameters levenbergMarquardtParameters) {
         LOGGER.info("saveAndMarkNewDefaults " + levenbergMarquardtParameters);
-        LevenbergMarquardtParameters actualDefaults = levenberqMarquardtParametersRepository.findByCurrentDefaultTrue();
+        LevenbergMarquardtParameters actualDefaults = levenberqMarquardtParametersRepository.findByCurrentDefaultTrueAndMolecule(levenbergMarquardtParameters.getMolecule());
         if (actualDefaults != null) {
             LOGGER.info("actualDefaults before " + actualDefaults);
             actualDefaults.setCurrentDefault(false);

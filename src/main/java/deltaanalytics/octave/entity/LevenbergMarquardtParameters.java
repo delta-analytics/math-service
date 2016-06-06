@@ -36,25 +36,6 @@ public class LevenbergMarquardtParameters {
         this.currentDefault = currentDefault;
     }
 
-    public LevenbergMarquardtParameters() {
-        init();
-    }
-
-    public LevenbergMarquardtParameters(int molecule) {
-        this.molecule = molecule;
-        init();
-    }
-
-    private void init() {
-        this.dp = new double[]{0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01};
-        this.pin = new double[]{1e-4, 1.0, 22.5 * 1e-3, 2e-6, 0.0, 0.0, -1e-5, 1e-10};
-        this.minValues = new double[]{-0.1, 0.5, 5 * 1e-3, 0.0, 0.0, -0.1, -1e-2, 0};
-        this.maxValues = new double[]{0.1, 2.0, 40 * 1e-3, 1e-3, 1.0, 0.1, 0.0, 1e-2};
-        this.stol = 1e-4;
-        this.niter = 15;
-        this.nlCorr = false;
-    }
-
     public double[] getDp() {
         return dp;
     }

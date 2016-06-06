@@ -66,7 +66,7 @@ public class Calculator {
             moleculeList
                 .stream()
                 .forEach((Integer molecule) -> {
-                    callables.add((Callable<Result>) () 
+                    callables.add(()
                             -> startOctaveForOneMolecule(molecule, new JuekeMathParametersDto(), new MeasureSampleDto(), hitranParameters, levenbergMarquardtParameters )); //executeCommand(String.format("ping -c %d google.com", molecule)));
                 });
             
