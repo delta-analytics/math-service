@@ -73,7 +73,7 @@ public class Calculator {
                         } catch (InterruptedException | ExecutionException e) {
                             throw new IllegalStateException(e);
                         }
-                    })
+                    }) //ToDo Hier muesste aus dem Result ein MeasureSampleMoleculeResultDto entstehen und Request an BrukerService
                     .forEach((Result r) -> LOGGER.info(r.toString()));
 
             SCHEDULER.shutdown();
