@@ -64,4 +64,17 @@ public class MeasureSampleMoleculeResultDto {
     public void setPpmNO2(double ppmNO2) {
         this.ppmNO2 = ppmNO2;
     }
+
+    @Override
+    public String toString() {
+        return "MeasureSampleMoleculeResultDto{" +
+                "ppmH2O=" + ppmH2O +
+                ", ppmCO2=" + ppmCO2 +
+                ", ppmN2O=" + ppmN2O +
+                ", ppmCO=" + ppmCO +
+                ", ppmCH4=" + ppmCH4 +
+                ", ppmNO=" + ppmNO +
+                ", ppmNO2=" + ppmNO2 +
+                '}';
+    }
 }

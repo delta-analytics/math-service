@@ -15,6 +15,8 @@ import deltaanalytics.octave.output.Result;
 import deltaanalytics.octave.repositories.HitranParametersRepository;
 import deltaanalytics.octave.repositories.LevenberqMarquardtParametersRepository;
 import deltaanalytics.octave.spectrum.SpectrumWrapper;
+import deltaanalytics.util.BrukerRestClient;
+import deltaanalytics.util.JuekeRestClient;
 import dk.ange.octave.OctaveEngine;
 import dk.ange.octave.OctaveEngineFactory;
 import org.slf4j.Logger;
@@ -36,13 +38,11 @@ public class Calculator {
     @Value("${octaveCliPath}")
     private static String octaveCliPath; // Linux "/usr/bin/octave-cli"; Win "C:\\Octave\\Octave-4.0.0\\bin\\octave-cli";
     private static final Logger LOGGER = LoggerFactory.getLogger(Calculator.class);
-
-    //private static final int CORES = Runtime.getRuntime().availableProcessors();
-    private static final ExecutorService SCHEDULER = Executors.newCachedThreadPool();  //newFixedThreadPool(CORES);
-
-    private List<Integer> moleculeList;
-    private HitranParameters hitranParameters;
-    private List<LevenbergMarquardtParameters> levenbergMarquardtParameterList;
+    @Autowired
+    private BrukerRestClient brukerRestClient;
+    @Autowired
+    private JuekeRestClient juekeRestClient;
+    private static final ExecutorService SCHEDULER = Executors.newCachedThreadPool();
 
     @Autowired
     private HitranParametersRepository hitranParametersRepository;
@@ -52,16 +52,14 @@ public class Calculator {
 
     public void doCalculations(List<Integer> moleculeList, Long measuresampleId) {
         try {
-            // ToDo hole measureSample Object / Bruker-service
-            // ToDo hole Temp und Patm aus  bzw Jüke-service
-
             List<Callable<Result>> callables = new ArrayList<>();
-
+            MeasureSampleDto measureSampleDto = brukerRestClient.getMeasureSample(measuresampleId);
+            JuekeMathParametersDto juekeMathParametersDto = juekeRestClient.getJuekeMathParametersDto(measureSampleDto.getCreatedAt(), measureSampleDto.getFinishedAt());
             moleculeList
                     .stream()
                     .forEach((Integer molecule) -> {
                         callables.add(()
-                                -> startOctaveForOneMolecule(molecule, new JuekeMathParametersDto(), new MeasureSampleDto())); //executeCommand(String.format("ping -c %d google.com", molecule)));
+                                -> startOctaveForOneMolecule(molecule, juekeMathParametersDto, measureSampleDto));
                     });
 
             SCHEDULER
