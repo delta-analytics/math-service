@@ -1,6 +1,6 @@
 package deltaanalytics.octave.output;
 
-public class Result {
+public class MoleculeResult {
     private int molecule;
     private double mixingRatioFromIntegralUnderTheCurve;
     private double mixingRatioFromHitranSum;

@@ -4,6 +4,7 @@ import deltaanalytics.octave.calculation.LevenbergMarquardtWrapper;
 import deltaanalytics.octave.calculation.ResultWrapper;
 import deltaanalytics.octave.dto.JuekeMathParametersDto;
 import deltaanalytics.octave.dto.MeasureSampleDto;
+import deltaanalytics.octave.dto.MoleculeResultListDto;
 import deltaanalytics.octave.entity.HitranParameters;
 import deltaanalytics.octave.entity.LevenbergMarquardtParameters;
 import deltaanalytics.octave.hitran.HitranWrapper;
@@ -11,7 +12,7 @@ import deltaanalytics.octave.initialize.OctaveEngineWrapper;
 import deltaanalytics.octave.input.HitranInputParameters;
 import deltaanalytics.octave.input.LevenberqMarquardtInputParameters;
 import deltaanalytics.octave.input.SpectrumInput;
-import deltaanalytics.octave.output.Result;
+import deltaanalytics.octave.output.MoleculeResult;
 import deltaanalytics.octave.repositories.HitranParametersRepository;
 import deltaanalytics.octave.repositories.LevenberqMarquardtParametersRepository;
 import deltaanalytics.octave.spectrum.SpectrumWrapper;
@@ -49,10 +50,12 @@ public class Calculator {
 
     @Autowired
     private LevenberqMarquardtParametersRepository levenberqMarquardtParametersRepository;
+    
+    private MoleculeResultListDto allMolecules;
 
     public void doCalculations(List<Integer> moleculeList, Long measuresampleId) {
         try {
-            List<Callable<Result>> callables = new ArrayList<>();
+            List<Callable<MoleculeResult>> callables = new ArrayList<>();
             MeasureSampleDto measureSampleDto = brukerRestClient.getMeasureSample(measuresampleId);
             JuekeMathParametersDto juekeMathParametersDto = juekeRestClient.getJuekeMathParametersDto(measureSampleDto.getCreatedAt(), measureSampleDto.getFinishedAt());
             moleculeList
@@ -65,16 +68,21 @@ public class Calculator {
             SCHEDULER
                     .invokeAll(callables)
                     .stream()
-                    .map((Future<Result> future) -> {
+                    .map((Future<MoleculeResult> future) -> {
                         try {
                             return future.get();
                         } catch (InterruptedException | ExecutionException e) {
                             throw new IllegalStateException(e);
                         }
-                    }) //ToDo Hier muesste aus dem Result ein MeasureSampleMoleculeResultDto entstehen und Request an BrukerService
-                    .forEach((Result r) -> LOGGER.info(r.toString()));
+                    })
+                    .forEach((MoleculeResult r) -> {
+                                allMolecules.addMoleculeResult(r);
+                                // @ToDo make r persistent  (im CommandRunner?)
+                                LOGGER.info(r.toString());
+                    } );
 
             SCHEDULER.shutdown();
+            // @ToDo transfer MoleculeResultListDto "allMolecules" to bruker-service/persistence
 
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Calculator.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,7 +90,7 @@ public class Calculator {
     }
 
 
-    private Result startOctaveForOneMolecule(
+    private MoleculeResult startOctaveForOneMolecule(
             int molecule,
             JuekeMathParametersDto juekeMathParametersDto,
             MeasureSampleDto measureSampleDto) {
@@ -120,7 +128,7 @@ public class Calculator {
 
         LOGGER.info("Übergebe der Ergebnisse für " + MOLECULE.get(molecule - 1));
         ResultWrapper resultWrapper = new ResultWrapper();
-        Result result = resultWrapper.outputResult(octave);
+        MoleculeResult result = resultWrapper.outputResult(octave);
 
         LOGGER.info("Mix Ratio from Hitan sum = "
                 + String.valueOf(result.getMixingRatioFromHitranSum()));

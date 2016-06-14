@@ -1,13 +1,13 @@
 package deltaanalytics.octave.calculation;
 
-import deltaanalytics.octave.output.Result;
+import deltaanalytics.octave.output.MoleculeResult;
 import dk.ange.octave.OctaveEngine;
 import dk.ange.octave.type.OctaveDouble;
 import org.apache.commons.math3.util.Precision;
 
 public class ResultWrapper {
-    public Result outputResult(OctaveEngine octave) {
-        Result result = new Result();
+    public MoleculeResult outputResult(OctaveEngine octave) {
+        MoleculeResult result = new MoleculeResult();
         OctaveDouble mo = (OctaveDouble) octave.get("mo");
         result.setMolecule((int) mo.get(1));
 
