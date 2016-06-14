@@ -1,6 +1,6 @@
 package deltaanalytics.octave.dto;
 
-public class MeasureSampleMoleculeResultDto {
+public class MoleculeResultDto {
     private double ppmH2O;
     private double ppmCO2;
     private double ppmN2O;

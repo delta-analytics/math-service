@@ -39,12 +39,12 @@
     </properties>
 
     <dependencies>
-
+        
         <dependency>
             <groupId>kenai</groupId>
             <artifactId>Octave</artifactId>
-<!--            <scope>system</scope>
-            <systemPath>${user.home}/.m2/repository/kenai/Octave/0.6.4/Octave-0.6.4.jar</systemPath>-->
+            <scope>system</scope>
+            <systemPath>${user.home}/.m2/repository/kenai/Octave/0.6.4/Octave-0.6.4.jar</systemPath>
             <version>0.6.4</version>
         </dependency>
         

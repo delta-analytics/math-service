@@ -2,7 +2,7 @@ package deltaanalytics.util;
 
 import deltaanalytics.octave.dto.JuekeMathParametersDto;
 import deltaanalytics.octave.dto.MeasureSampleDto;
-import deltaanalytics.octave.dto.MeasureSampleMoleculeResultDto;
+import deltaanalytics.octave.dto.MoleculeResultDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,6 @@ package deltaanalytics.octave.calculation;
 import deltaanalytics.octave.output.Result;
 import dk.ange.octave.OctaveEngine;
 import dk.ange.octave.type.OctaveDouble;
-import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.util.Precision;
 
 public class ResultWrapper {
@@ -11,15 +10,12 @@ public class ResultWrapper {
         Result result = new Result();
         OctaveDouble mo = (OctaveDouble) octave.get("mo");
         result.setMolecule((int) mo.get(1));
-        
-        result.setInitialGuess(new ArrayRealVector(((OctaveDouble) octave.get("pin")).getData()));
-        result.setDp(new ArrayRealVector(((OctaveDouble) octave.get("dp")).getData()));
 
-        OctaveDouble fitParams = (OctaveDouble) octave.get("p1");
-        result.setFitParams(new ArrayRealVector(fitParams.getData()));
         OctaveDouble r_squared = (OctaveDouble) octave.get("r21");
         double r2 = Precision.round(r_squared.get(1), 4);
         result.setR2(r2);
+        
+        OctaveDouble fitParams = (OctaveDouble) octave.get("p1");
 
         // compute the integrals under the curve
         octave.eval("ab_minus_offset = (ab(idx1:idx2) - baseline_corr*p1(5)) - p1(1);");

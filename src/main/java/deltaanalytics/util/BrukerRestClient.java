@@ -1,7 +1,7 @@
 package deltaanalytics.util;
 
 import deltaanalytics.octave.dto.MeasureSampleDto;
-import deltaanalytics.octave.dto.MeasureSampleMoleculeResultDto;
+import deltaanalytics.octave.dto.MoleculeResultDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class BrukerRestClient {
         return restTemplate.getForObject(request, MeasureSampleDto.class);
     }
 
-    public void save(MeasureSampleMoleculeResultDto measureSampleMoleculeResultDto, Long brukerMeasureSampleId) {
+    public void save(MoleculeResultDto measureSampleMoleculeResultDto, Long brukerMeasureSampleId) {
         logger.info("save " + measureSampleMoleculeResultDto + " for " + brukerMeasureSampleId);
         String request = hostWithPort() + "/" + moleculeResultUrl + "/" + brukerMeasureSampleId;
         logger.info(request);

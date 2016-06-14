@@ -1,22 +1,20 @@
 package deltaanalytics.octave.output;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
-
 public class Result {
     private int molecule;
     private double mixingRatioFromIntegralUnderTheCurve;
     private double mixingRatioFromHitranSum;
     private double r2;
     private double TimeInSecForLevenbergMarquardtFit;
-    private ArrayRealVector fitParams;
+    //private ArrayRealVector fitParams;   //  includes FOV, RES, offset,... see 6 parameters below
     private double estimatedFov;
     private double fovLineShift;
     private double additionalLineShift;
     private double effectiveResolution;
     private double amplitudeFitFactor;
     private double offsetFitConstant;
-    private ArrayRealVector initialGuess;
-    private ArrayRealVector dp;
+    //private ArrayRealVector initialGuess;   // -> LevenbergMarquardtParameters
+    //private ArrayRealVector dp;   // -> LevenbergMarquardtParameters
 
     public double getMixingRatioFromIntegralUnderTheCurve() {
         return mixingRatioFromIntegralUnderTheCurve;
@@ -48,14 +46,6 @@ public class Result {
 
     public void setTimeInSecForLevenbergMarquardtFit(double timeInSecForLevenbergMarquardtFit) {
         TimeInSecForLevenbergMarquardtFit = timeInSecForLevenbergMarquardtFit;
-    }
-
-    public ArrayRealVector getFitParams() {
-        return fitParams;
-    }
-
-    public void setFitParams(ArrayRealVector fitParams) {
-        this.fitParams = fitParams;
     }
 
     public double getEstimatedFov() {
@@ -106,22 +96,6 @@ public class Result {
         this.offsetFitConstant = offsetFitConstant;
     }
 
-    public ArrayRealVector getInitialGuess() {
-        return initialGuess;
-    }
-
-    public void setInitialGuess(ArrayRealVector initialGuess) {
-        this.initialGuess = initialGuess;
-    }
-
-    public ArrayRealVector getDp() {
-        return dp;
-    }
-
-    public void setDp(ArrayRealVector dp) {
-        this.dp = dp;
-    }
-
     public int getMolecule() {
         return molecule;
     }
@@ -138,15 +112,12 @@ public class Result {
                 + ", mixingRatioFromHitranSum=" + mixingRatioFromHitranSum 
                 + ", r2=" + r2 
                 + ", TimeInSecForLevenbergMarquardtFit=" + TimeInSecForLevenbergMarquardtFit 
-                + ", fitParams=" + fitParams 
                 + ", estimatedFov=" + estimatedFov 
                 + ", fovLineShift=" + fovLineShift 
                 + ", additionalLineShift=" + additionalLineShift 
                 + ", effectiveResolution=" + effectiveResolution 
                 + ", amplitudeFitFactor=" + amplitudeFitFactor 
                 + ", offsetFitConstant=" + offsetFitConstant 
-                + ", initialGuess=" + initialGuess 
-                + ", dp=" + dp
                 + ", time in sec for fit=" + TimeInSecForLevenbergMarquardtFit 
                 + "}";
     }
