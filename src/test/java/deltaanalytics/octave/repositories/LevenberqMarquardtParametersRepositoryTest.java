@@ -1,6 +1,6 @@
 package deltaanalytics.octave.repositories;
 
-import deltaanalytics.octave.Application;
+import deltaanalytics.Application;
 import deltaanalytics.octave.entity.LevenbergMarquardtParameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
@@ -22,13 +23,7 @@ public class LevenberqMarquardtParametersRepositoryTest {
     private LevenberqMarquardtParametersRepository levenberqMarquardtParametersRepository;
 
     @Test
-    public void save(){
-        LevenbergMarquardtParameters levenbergMarquardtParameters = new LevenbergMarquardtParameters();
-        double[] dp = {2.1, 0.1};
-        levenbergMarquardtParameters.setDp(dp);
-        levenberqMarquardtParametersRepository.save(levenbergMarquardtParameters);
-
-        assertThat(levenberqMarquardtParametersRepository.count(), is(1l));
-        assertThat(levenberqMarquardtParametersRepository.findOne(levenbergMarquardtParameters.getId()).getDp(), is(dp));
+    public void initializeFor7Molecules(){
+        assertThat(levenberqMarquardtParametersRepository.count(), is(7l));
     }
 }

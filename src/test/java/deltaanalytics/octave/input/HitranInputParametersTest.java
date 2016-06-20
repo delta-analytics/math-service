@@ -10,29 +10,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 public class HitranInputParametersTest {
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    @Test
-    public void checkMoleculeNumber_4(){
-        HitranParameters input = new HitranParameters();
-        input.setCallHitran(false);
-        input.setMolecule(4);
-
-        HitranInputParameters inputParameter = new HitranInputParameters(input);
-        
-        assertThat(inputParameter.getMolecule(), is(equalTo(4)));
-        assertThat(inputParameter.getLowWN(), is(equalTo(2080.0)));
-        assertThat(inputParameter.getHighWN(), is(equalTo(2141.0))); 
-        assertThat(inputParameter.getBaselineStep(), is(equalTo(0)));
-        assertThat(inputParameter.getCallHitran(), is(equalTo(true)));        
-    }
-    
+       
     @Test
     public void getMoleculeEval(){
         HitranInputParameters inputParameter = new HitranInputParameters();
@@ -82,6 +60,18 @@ public class HitranInputParametersTest {
     @Test 
     public void getAllOthers(){
         HitranParameters input = new HitranParameters();
+        input.setMolecule(1);
+        input.setCallHitran(false);
+        input.setLowWN(3860);
+        input.setHighWN(3965);
+        input.setBaselineStep(0);
+        input.setStp(0.02);
+        input.setIntensThres1(1e-25);
+        input.setIsotopo1(1);
+        input.setIntensThres2(1e-25);
+        input.setIsotopo2(2);
+        input.setSf(1);
+        input.setDd(5);
         HitranInputParameters inputParameter = new HitranInputParameters(input);
 
         assertThat(inputParameter.getStpEval(), is(equalTo("stp = 0.02;")));
@@ -90,8 +80,6 @@ public class HitranInputParametersTest {
         assertThat(inputParameter.getIntensThres2Eval(), is(equalTo("intensThres2 = 1.0E-25;")));
         assertThat(inputParameter.getIsotopo1Eval(), is(equalTo("isotopo1 = 1;")));
         assertThat(inputParameter.getIsotopo2Eval(), is(equalTo("isotopo2 = 2;")));
-        assertThat(inputParameter.getTempEval(), is(equalTo("Temp = 313.0;")));
-        assertThat(inputParameter.getPatmEval(), is(equalTo("Patm = 1.0;")));
         assertThat(inputParameter.getDdEval(), is(equalTo("Dd = 5;")));
     }    
 }

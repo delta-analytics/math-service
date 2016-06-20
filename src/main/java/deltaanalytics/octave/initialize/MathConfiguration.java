@@ -28,13 +28,13 @@ public class MathConfiguration {
         hitranParametersRepository.saveAndMarkNewDefaults(buildHitranParametersMoleculeNO());
         hitranParametersRepository.saveAndMarkNewDefaults(buildHitranParametersMoleculeNO2());
 
-        levenberqMarquardtParametersRepository.save(builLevenbergMarquardtParameters(1));
-        levenberqMarquardtParametersRepository.save(builLevenbergMarquardtParametersForCO2());
-        levenberqMarquardtParametersRepository.save(builLevenbergMarquardtParameters(3));
-        levenberqMarquardtParametersRepository.save(builLevenbergMarquardtParameters(4));
-        levenberqMarquardtParametersRepository.save(builLevenbergMarquardtParameters(5));
-        levenberqMarquardtParametersRepository.save(builLevenbergMarquardtParameters(6));
-        levenberqMarquardtParametersRepository.save(builLevenbergMarquardtParameters(7));
+        levenberqMarquardtParametersRepository.saveAndMarkNewDefaults(builLevenbergMarquardtParameters(1));
+        levenberqMarquardtParametersRepository.saveAndMarkNewDefaults(builLevenbergMarquardtParametersForCO2());
+        levenberqMarquardtParametersRepository.saveAndMarkNewDefaults(builLevenbergMarquardtParameters(3));
+        levenberqMarquardtParametersRepository.saveAndMarkNewDefaults(builLevenbergMarquardtParameters(4));
+        levenberqMarquardtParametersRepository.saveAndMarkNewDefaults(builLevenbergMarquardtParameters(5));
+        levenberqMarquardtParametersRepository.saveAndMarkNewDefaults(builLevenbergMarquardtParameters(6));
+        levenberqMarquardtParametersRepository.saveAndMarkNewDefaults(builLevenbergMarquardtParameters(7));
 
     }
 

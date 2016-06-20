@@ -1,6 +1,6 @@
 package deltaanalytics.octave.repositories;
 
-import deltaanalytics.octave.Application;
+import deltaanalytics.Application;
 import deltaanalytics.octave.entity.HitranParameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
@@ -21,14 +22,7 @@ public class HitranParametersRepositoryTest {
     private HitranParametersRepository hitranParametersRepository;
 
     @Test
-    public void save() throws Exception {
-        HitranParameters hitranParameters = new HitranParameters();
-        int baselineStep = 1;
-        hitranParameters.setBaselineStep(baselineStep);
-
-        hitranParametersRepository.save(hitranParameters);
-
-        assertThat(hitranParametersRepository.count(), is(1l));
-        assertThat(hitranParametersRepository.findOne(hitranParameters.getId()).getBaselineStep(), is(baselineStep));
+    public void initializeFor7MoleculesMathConfiguration() throws Exception {
+        assertThat(hitranParametersRepository.count(), is(7l));
     }
 }

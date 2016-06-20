@@ -1,6 +1,6 @@
 package deltaanalytics.octave.initialize;
 
-import deltaanalytics.octave.Application;
+import deltaanalytics.Application;
 import deltaanalytics.octave.repositories.HitranParametersRepository;
 import deltaanalytics.octave.repositories.LevenberqMarquardtParametersRepository;
 import org.junit.Test;
@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
 
-import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)

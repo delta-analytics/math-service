@@ -1,20 +1,20 @@
 package deltaanalytics.util;
 
 import deltaanalytics.octave.dto.MeasureSampleDto;
-import deltaanalytics.octave.dto.MoleculeResultListDto;
+import deltaanalytics.octave.dto.MoleculeResultsDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 public class BrukerRestClient {
     private static final Logger logger = LoggerFactory.getLogger(BrukerRestClient.class);
 
-    @Autowired
-    private RestOperations restTemplate;
+    private RestTemplate restTemplate = new RestTemplate();
     @Value("${bruker-service.host}")
     private String host;
     @Value("${bruker-service.port}")
@@ -31,7 +31,7 @@ public class BrukerRestClient {
         return restTemplate.getForObject(request, MeasureSampleDto.class);
     }
 
-    public void save(MoleculeResultListDto moleculesResultDto, Long brukerMeasureSampleId) {
+    public void save(MoleculeResultsDto moleculesResultDto, Long brukerMeasureSampleId) {
         logger.info("save " + moleculesResultDto + " for " + brukerMeasureSampleId);
         String request = hostWithPort() + "/" + moleculeResultUrl + "/" + brukerMeasureSampleId;
         logger.info(request);

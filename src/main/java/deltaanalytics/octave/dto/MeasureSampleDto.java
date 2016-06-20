@@ -1,19 +1,18 @@
 package deltaanalytics.octave.dto;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class MeasureSampleDto {
     private long id;
 
-    private List<MeasureSampleResult> measureSampleResults = new ArrayList<>();
     private MutableBrukerParametersDto brukerParameters;
     private LocalDateTime createdAt;
     private LocalDateTime finishedAt;
     private BrukerStateEnumDto brukerStateEnum;
     private String filename;
     private String error;
+    private MoleculeResultsDto moleculeResults;
 
     public long getId() {
         return id;
@@ -23,17 +22,14 @@ public class MeasureSampleDto {
         this.id = id;
     }
 
-    public void addMeasureSampleResult(MeasureSampleResult measureSampleResult) {
-        this.measureSampleResults.add(measureSampleResult);
+    public MoleculeResultsDto getMoleculeResults() {
+        return moleculeResults;
     }
 
-    public List<MeasureSampleResult> getMeasureSampleResults() {
-        return measureSampleResults;
+    public void setMoleculeResults(MoleculeResultsDto moleculeResults) {
+        this.moleculeResults = moleculeResults;
     }
 
-    public void setMeasureSampleResults(List<MeasureSampleResult> measureSampleResults) {
-        this.measureSampleResults = measureSampleResults;
-    }
 
     public MutableBrukerParametersDto getBrukerParameters() {
         return brukerParameters;
@@ -96,16 +92,17 @@ public class MeasureSampleDto {
 
     @Override
     public String toString() {
-        return "MeasureSample{" +
-                "id=" + id +
-                ", measureSampleResults=" + measureSampleResults +
+        return "MeasureSampleDto{" + "id=" + id +
                 ", brukerParameters=" + brukerParameters +
                 ", createdAt=" + createdAt +
                 ", finishedAt=" + finishedAt +
                 ", brukerStateEnum=" + brukerStateEnum +
-                ", error='" + error + '\'' +
-                '}';
+                ", filename=" + filename +
+                ", error=" + error +
+                ", moleculeResults=" + moleculeResults + '}';
     }
+
+
 
     @Override
     public int hashCode() {

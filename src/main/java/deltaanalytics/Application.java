@@ -1,4 +1,4 @@
-package deltaanalytics.octave;
+package deltaanalytics;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

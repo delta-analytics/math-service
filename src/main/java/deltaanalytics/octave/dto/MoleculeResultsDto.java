@@ -1,23 +1,22 @@
 package deltaanalytics.octave.dto;
 
-import deltaanalytics.octave.output.MoleculeResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MoleculeResultListDto {
-    private List<MoleculeResult> allMolecules = new ArrayList<>();
+public class MoleculeResultsDto {
+    private List<MoleculeResultDto> allMolecules = new ArrayList<>();
 
   
-    public void addMoleculeResult(MoleculeResult moleculeResult) {
+    public void addMoleculeResult(MoleculeResultDto moleculeResult) {
         this.allMolecules.add(moleculeResult);
     }
 
-    public List<MoleculeResult> getMoleculeResultList() {
+    public List<MoleculeResultDto> getMoleculeResultList() {
         return allMolecules;
     }
 
-    public void setMoleculeResultList(List<MoleculeResult> allMolecules) {
+    public void setMoleculeResultList(List<MoleculeResultDto> allMolecules) {
         this.allMolecules = allMolecules;
     }    
     

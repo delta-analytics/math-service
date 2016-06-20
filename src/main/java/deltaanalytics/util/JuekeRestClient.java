@@ -2,7 +2,7 @@ package deltaanalytics.util;
 
 import deltaanalytics.octave.dto.JuekeMathParametersDto;
 import deltaanalytics.octave.dto.MeasureSampleDto;
-import deltaanalytics.octave.dto.MoleculeResultListDto;
+import deltaanalytics.octave.dto.MoleculeResultsDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestOperations;
 
 import java.time.LocalDateTime;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 public class JuekeRestClient {
     private static final Logger logger = LoggerFactory.getLogger(JuekeRestClient.class);
 
-    @Autowired
-    private RestOperations restTemplate;
+    private RestTemplate restTemplate = new RestTemplate();
     @Value("${jueke-service.host}")
     private String host;
     @Value("${jueke-service.port}")

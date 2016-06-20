@@ -1,20 +1,17 @@
-package deltaanalytics.octave.output;
+package deltaanalytics.octave.dto;
 
-public class MoleculeResult {
+public class MoleculeResultDto {
     private int molecule;
     private double mixingRatioFromIntegralUnderTheCurve;
     private double mixingRatioFromHitranSum;
     private double r2;
     private double TimeInSecForLevenbergMarquardtFit;
-    //private ArrayRealVector fitParams;   //  includes FOV, RES, offset,... see 6 parameters below
     private double estimatedFov;
     private double fovLineShift;
     private double additionalLineShift;
     private double effectiveResolution;
     private double amplitudeFitFactor;
     private double offsetFitConstant;
-    //private ArrayRealVector initialGuess;   // -> LevenbergMarquardtParameters
-    //private ArrayRealVector dp;   // -> LevenbergMarquardtParameters
 
     public double getMixingRatioFromIntegralUnderTheCurve() {
         return mixingRatioFromIntegralUnderTheCurve;
