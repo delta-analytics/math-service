@@ -36,13 +36,18 @@ import java.util.logging.Level;
 @Component
 public class Calculator {
     public static final List<String> MOLECULE = Arrays.asList("H2O", "CO2", "N2O", "CO", "CH4", "NO", "NO2");
+
     @Value("${octaveCliPath}")
-    private static String octaveCliPath; // Linux "/usr/bin/octave-cli"; Win "C:\\Octave\\Octave-4.0.0\\bin\\octave-cli";
+    private String octaveCliPath; // Linux "/usr/bin/octave-cli"; Win "C:\\Octave\\Octave-4.0.0\\bin\\octave-cli";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Calculator.class);
+
     @Autowired
     private BrukerRestClient brukerRestClient;
+
     @Autowired
     private JuekeRestClient juekeRestClient;
+
     private static final ExecutorService SCHEDULER = Executors.newCachedThreadPool();
 
     @Autowired
@@ -50,13 +55,14 @@ public class Calculator {
 
     @Autowired
     private LevenberqMarquardtParametersRepository levenberqMarquardtParametersRepository;
-    
+
+    // get the MoleculeResults object from BrukerRestClient
     private MoleculeResultsDto allMolecules;
 
     public void doCalculations(List<Integer> moleculeList, Long measuresampleId) {
         try {
             List<Callable<MoleculeResultDto>> callables = new ArrayList<>();
-            MeasureSampleDto measureSampleDto = brukerRestClient.getMeasureSample(measuresampleId);
+            MeasureSampleDto measureSampleDto = brukerRestClient.getMeasuredSample(measuresampleId);
             JuekeMathParametersDto juekeMathParametersDto = juekeRestClient.getJuekeMathParametersDto(measureSampleDto.getCreatedAt(), measureSampleDto.getFinishedAt());
             moleculeList
                     .stream()
@@ -77,12 +83,13 @@ public class Calculator {
                     })
                     .forEach((MoleculeResultDto r) -> {
                                 allMolecules.addMoleculeResult(r);
-                                // @ToDo make r persistent  (im CommandRunner?)
+                                // @ToDo make "r" persistent    is not necessary!
                                 LOGGER.info(r.toString());
                     } );
 
             SCHEDULER.shutdown();
-            // @ToDo transfer MoleculeResultListDto "allMolecules" to bruker-service/persistence
+            // @ToDo make "allMolecules" persistent
+            brukerRestClient.saveResults(allMolecules, measuresampleId);
 
         } catch (InterruptedException ex) {
             java.util.logging.Logger.getLogger(Calculator.class.getName()).log(Level.SEVERE, null, ex);

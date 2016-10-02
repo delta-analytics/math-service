@@ -3,15 +3,17 @@ package deltaanalytics.octave.input;
 import deltaanalytics.octave.entity.LevenbergMarquardtParameters;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class LevenberqMarquardtInputParameters {
     private final int LINEARSIZE = 6;  // reduce array size from 8 to 6 if nlCorr = false
     private int molecule;
-    private double[] dp;
-    private double[] pin;
-    private double[] minValues;
-    private double[] maxValues;
+    private List<Double> dp;
+    private List<Double> pin;
+    private List<Double> minValues;
+    private List<Double> maxValues;
     private double stol;  // tolerance criterium for aborting fit
     private int niter;  // max number of iterations
     private boolean nlCorr;  // non linear correction  yes/no
@@ -30,10 +32,10 @@ public class LevenberqMarquardtInputParameters {
             this.minValues = LmPars.getMinValues();
             this.maxValues = LmPars.getMaxValues();            
         }else {
-            this.dp = Arrays.copyOf(LmPars.getDp(), LINEARSIZE);
-            this.pin = Arrays.copyOf(LmPars.getPin(), LINEARSIZE);
-            this.minValues = Arrays.copyOf(LmPars.getMinValues(), LINEARSIZE);
-            this.maxValues = Arrays.copyOf(LmPars.getMaxValues(), LINEARSIZE);             
+            this.dp = LmPars.getDp().subList(0,6);
+            this.pin = LmPars.getPin().subList(0,6);
+            this.minValues = LmPars.getMinValues().subList(0,6);
+            this.maxValues = LmPars.getMaxValues().subList(0,6);
         }
         this.stol = LmPars.getStol();
         this.niter = LmPars.getNiter();
@@ -64,44 +66,44 @@ public class LevenberqMarquardtInputParameters {
         return nlCorr;
     }
 
-    public double[] getDp() {
+    public List<Double> getDp() {
         return dp;
     }
-    public void setDp(double[] dp) {
+    public void setDp(List<Double> dp) {
         this.dp = dp;
     }
     public String getDpEval() {
-        return "dp = " + Arrays.toString(dp) + ";";
+        return "dp = [" + dp.stream().map(Object::toString).collect(Collectors.joining(", ")) + "];";
     }
 
-    public double[] getPin() {
+    public List<Double> getPin() {
         return pin;
     }
-    public void setPin(double[] pin) {
+    public void setPin(List<Double> pin) {
         this.pin = pin;
     }
     public String getPinEval() {
-        return "pin = " + Arrays.toString(pin) + ";";
+        return "pin = [" + pin.stream().map(Object::toString).collect(Collectors.joining(", ")) + "];";
     }
     
-    public double[] getMinValues() {
+    public List<Double> getMinValues() {
         return minValues;
     }
-    public void setMinValues(double[] minValues) {
+    public void setMinValues(List<Double> minValues) {
         this.minValues = minValues;
     }
     public String getMinValuesEval(){
-        return "minvalues = " + Arrays.toString(minValues) + ";" ;
+        return "minvalues = [" + minValues.stream().map(Object::toString).collect(Collectors.joining(", ")) + "];" ;
     }
 
-    public double[] getMaxValues() {
+    public List<Double> getMaxValues() {
         return maxValues;
     }
-    public void setMaxValues(double[] maxValues) {
+    public void setMaxValues(List<Double> maxValues) {
         this.maxValues = maxValues;
     }
     public String getMaxValuesEval(){
-        return "maxvalues = " + Arrays.toString(maxValues) + ";" ;
+        return "maxvalues = [" + maxValues.stream().map(Object::toString).collect(Collectors.joining(", ")) + "];" ;
     }
     
     public String getFdefEval() {
@@ -139,10 +141,11 @@ public class LevenberqMarquardtInputParameters {
     @Override
     public String toString() {
         return "LevenberqMarquartInputParameters{" 
-                + "dp=" + Arrays.toString(dp) + ", pin=" + Arrays.toString(pin)
-                + ", minValues=" + Arrays.toString(minValues) + ", maxValues=" + Arrays.toString(maxValues)
-                + ", stol=" + stol + ", niter=" + niter
-                + ", nlCorr=" + nlCorr
+                + "dp=" + dp.stream().map(Object::toString).collect(Collectors.joining(", "))
+                + ", pin=" + pin.stream().map(Object::toString).collect(Collectors.joining(", "))
+                + ", minValues=" + minValues.stream().map(Object::toString).collect(Collectors.joining(", "))
+                + ", maxValues=" + maxValues.stream().map(Object::toString).collect(Collectors.joining(", "))
+                + ", stol=" + stol + ", niter=" + niter + ", nlCorr=" + nlCorr
                 + "}";
     }
 

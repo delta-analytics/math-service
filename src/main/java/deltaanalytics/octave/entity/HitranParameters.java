@@ -7,9 +7,9 @@ import javax.persistence.Id;
 @Entity
 public class HitranParameters {
     private long id;
-    private int molecule;
+    private int molecule;   // which moleclue to investigate 1=H2O  2=CO2  3=N2O  4=CO  5=CH4  6=NO  7=NO2
     private boolean currentDefault;
-    private boolean callHitran;  // which moleclue to investigate 1=H2O  2=CO2  3=N2O  4=CO  5=CH4  6=NO  7=NO2
+    private boolean callHitran;  // call Hitran function before doing nonlinear fit true/false
     private double lowWN;  // low wavenumbers
     private double highWN;  // high wavenumbers
     private int baselineStep;  // sampling point interval to fit a baseline curve
@@ -171,16 +171,80 @@ public class HitranParameters {
 
     @Override
     public String toString() {
-        return "HitranParameters{" + "callHitran=" + callHitran
-                + ", lowWN=" + lowWN + ", highWN=" + highWN
-                + ", baselineStep=" + baselineStep
-                + ", stp=" + stp
-                + ", intensThres1=" + intensThres1 + ", isotopo1=" + isotopo1
-                + ", intensThres2=" + intensThres2 + ", isotopo2=" + isotopo2
-                + ", sf=" + sf
-                + ", Temp=" + Temp + ", Patm=" + Patm
-                + ", Dd=" + Dd + '}';
+        return "HitranParameters{" +
+                "id=" + id +
+                ", molecule=" + molecule +
+                ", currentDefault=" + currentDefault +
+                ", callHitran=" + callHitran +
+                ", lowWN=" + lowWN +
+                ", highWN=" + highWN +
+                ", baselineStep=" + baselineStep +
+                ", stp=" + stp +
+                ", intensThres1=" + intensThres1 +
+                ", isotopo1=" + isotopo1 +
+                ", intensThres2=" + intensThres2 +
+                ", isotopo2=" + isotopo2 +
+                ", sf=" + sf +
+                ", Temp=" + Temp +
+                ", Patm=" + Patm +
+                ", Dd=" + Dd +
+                '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        HitranParameters that = (HitranParameters) o;
+
+        if (id != that.id) return false;
+        if (molecule != that.molecule) return false;
+        if (currentDefault != that.currentDefault) return false;
+        if (callHitran != that.callHitran) return false;
+        if (Double.compare(that.lowWN, lowWN) != 0) return false;
+        if (Double.compare(that.highWN, highWN) != 0) return false;
+        if (baselineStep != that.baselineStep) return false;
+        if (Double.compare(that.stp, stp) != 0) return false;
+        if (Double.compare(that.intensThres1, intensThres1) != 0) return false;
+        if (isotopo1 != that.isotopo1) return false;
+        if (Double.compare(that.intensThres2, intensThres2) != 0) return false;
+        if (isotopo2 != that.isotopo2) return false;
+        if (Double.compare(that.sf, sf) != 0) return false;
+        if (Double.compare(that.Temp, Temp) != 0) return false;
+        if (Double.compare(that.Patm, Patm) != 0) return false;
+        return Dd == that.Dd;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = (int) (id ^ (id >>> 32));
+        result = 31 * result + molecule;
+        result = 31 * result + (currentDefault ? 1 : 0);
+        result = 31 * result + (callHitran ? 1 : 0);
+        temp = Double.doubleToLongBits(lowWN);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(highWN);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + baselineStep;
+        temp = Double.doubleToLongBits(stp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(intensThres1);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + isotopo1;
+        temp = Double.doubleToLongBits(intensThres2);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + isotopo2;
+        temp = Double.doubleToLongBits(sf);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(Temp);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(Patm);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + Dd;
+        return result;
+    }
 }

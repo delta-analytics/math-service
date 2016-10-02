@@ -4,10 +4,10 @@ import deltaanalytics.Calculator;
 import deltaanalytics.octave.entity.HitranParameters;
 
 public class HitranInputParameters {
-    private boolean callHitran;  // which moleclue to investigate 1=H2O  2=CO2  3=N2O  4=CO  5=CH4  6=NO  7=NO2
+    private boolean callHitran;  // do fitting with/without call to Hitran function
     private double lowWN;  // low wavenumbers
     private double highWN;  // high wavenumbers
-    private int molecule;  // the molecule = 1,2,3,4,5,6,7
+    private int molecule;  // the molecule = 1,2,3,4,5,6,7  1=H2O  2=CO2  3=N2O  4=CO  5=CH4  6=NO  7=NO2
     private int baselineStep;  // sampling point interval to fit a baseline curve
     private double stp;  // default 0.02; frequency hitran spacing in cm-1, 0.02 corresponds to 0.04 resolution in cm-1
     private double intensThres1; // intensity threshold1 1e-25

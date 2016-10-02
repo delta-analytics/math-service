@@ -24,11 +24,11 @@ public class HitranParameterController {
     @ResponseBody
     public List<HitranParameters> getActualHitran() {
         logger.info("getActualHitranParameters");
-        return hitranParametersRepository.findByCurrentDefaultTrue();
+        return hitranParametersRepository.findByCurrentDefaultTrue();  // FJ actually finds all seven molecules having parameter currentDefaultTrue = TRUE
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void setHitranNewDefaults(@RequestBody HitranParameters hitranParameters) {
+    public void setHitranNewDefaults(@RequestBody HitranParameters hitranParameters) {  // FJ this is for one molecule type!
         logger.info("setHitran " + hitranParameters.toString());
         hitranParametersRepository.saveAndMarkNewDefaults(hitranParameters);
     }

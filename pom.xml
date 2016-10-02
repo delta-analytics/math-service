@@ -21,20 +21,15 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <start-class>deltaanalytics.Application</start-class>
         <java.version>1.8</java.version>
     </properties>
 
@@ -43,8 +38,6 @@
         <dependency>
             <groupId>kenai</groupId>
             <artifactId>Octave</artifactId>
-            <scope>system</scope>
-            <systemPath>${user.home}/.m2/repository/kenai/Octave/0.6.4/Octave-0.6.4.jar</systemPath>
             <version>0.6.4</version>
         </dependency>
         

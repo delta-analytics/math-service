@@ -23,7 +23,7 @@ public class CalculationController {
     public void startCalculationFor(@PathVariable("measurementid") Long measurementId) {
         logger.info("startCalculationFor " + measurementId);
         //ToDo 7 Molekuele, sollte von der GUI eingeschränkt werden
-        List<Integer> molecules = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
+        List<Integer> molecules = Arrays.asList(1, 2, 3, 4, 5, 6, 7);  // "H2O", "CO2", "N2O", "CO", "CH4", "NO", "NO2"
         calculator.doCalculations(molecules, measurementId);
         logger.info("endCalculationFor " + measurementId);
     }

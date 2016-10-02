@@ -4,6 +4,7 @@ import deltaanalytics.octave.entity.LevenbergMarquardtParameters;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import java.util.Arrays;
 
 public class LevenberqMarquardtInputParametersTest {
     
@@ -12,10 +13,10 @@ public class LevenberqMarquardtInputParametersTest {
     @Before
     public void setup(){
         levenbergMarquardtParameters = new LevenbergMarquardtParameters();
-        levenbergMarquardtParameters.setDp(new double[]{0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01});
-        levenbergMarquardtParameters.setPin(new double[]{1e-4, 1.0, 22.5 * 1e-3, 1e-8, 1e-5, 0.0, -1e-5, 1e-10});
-        levenbergMarquardtParameters.setMinValues(new double[]{-0.1, 0.5, 5 * 1e-3, 0.0, 0.0, -0.1, -1e-2, 0});
-        levenbergMarquardtParameters.setMaxValues(new double[]{0.1, 2.0, 40 * 1e-3, 1e-3, 1.0, 0.1, 0.0, 1e-2});
+        levenbergMarquardtParameters.setDp( Arrays.asList(0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01) );
+        levenbergMarquardtParameters.setPin( Arrays.asList(1e-4, 1.0, 22.5 * 1e-3, 1e-8, 1e-5, 0.0, -1e-5, 1e-10) );
+        levenbergMarquardtParameters.setMinValues( Arrays.asList(-0.1, 0.5, 5 * 1e-3, 0.0, 0.0, -0.1, -1e-2, 0.0) );
+        levenbergMarquardtParameters.setMaxValues( Arrays.asList(0.1, 2.0, 40 * 1e-3, 1e-3, 1.0, 0.1, 0.0, 1e-2) );
         levenbergMarquardtParameters.setMolecule(4);
         levenbergMarquardtParameters.setStol(1e-4);
         levenbergMarquardtParameters.setNiter(15);
@@ -50,7 +51,7 @@ public class LevenberqMarquardtInputParametersTest {
         String expResult = "dp = [0.01, 0.01, 0.01, 0.01, 0.01, 0.01];";
         String result = instance.getDpEval();
         assertEquals(expResult, result);
-        assertEquals(instance.getDp().length, 6);
+        assertEquals(instance.getDp().size(), 6);
     }
 
     @Test
@@ -65,9 +66,9 @@ public class LevenberqMarquardtInputParametersTest {
         assertEquals(expResult, result);        
     }    
 
-     @Test
+    @Test
     public void testGetPinEval() {
-        levenbergMarquardtParameters.setPin(new double[]{1e-4, 1.0, 22.5 * 1e-3, 2.0E-6, 0.0, 0.0});
+        levenbergMarquardtParameters.setPin( Arrays.asList(1e-4, 1.0, 22.5 * 1e-3, 2.0E-6, 0.0, 0.0) );
         LevenberqMarquardtInputParameters instance = 
                 new LevenberqMarquardtInputParameters(levenbergMarquardtParameters);
         String expResult = "pin = [1.0E-4, 1.0, 0.0225, 2.0E-6, 0.0, 0.0];";
@@ -83,7 +84,7 @@ public class LevenberqMarquardtInputParametersTest {
         String expResult = "minvalues = [-0.1, 0.5, 0.005, 0.0, 0.0, -0.1];";
         String result = instance.getMinValuesEval();
         assertEquals(expResult, result);
-        assertEquals(instance.getMaxValues().length, 6);
+        assertEquals(instance.getMaxValues().size(), 6);
     }
 
     @Test

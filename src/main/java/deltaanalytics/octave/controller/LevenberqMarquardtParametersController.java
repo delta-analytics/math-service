@@ -22,13 +22,13 @@ public class LevenberqMarquardtParametersController {
 
     @RequestMapping("")
     @ResponseBody
-    public List<LevenbergMarquardtParameters> getActualHitran() {
+    public List<LevenbergMarquardtParameters> getActualLevenberg() {
         logger.info("getActualLevenbergMarquardtParameters");
         return levenberqMarquardtParametersRepository.findByCurrentDefaultTrue();
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void setLevenberqMarquardtParametersNewDefaults(@RequestBody LevenbergMarquardtParameters levenbergMarquardtParameters) {
+    public void setLevenberqMarquardtParametersNewDefaults(@RequestBody LevenbergMarquardtParameters levenbergMarquardtParameters) {   // FJ this is for one molecule type!
         logger.info("setLevenbergMarquardtParameters " + levenbergMarquardtParameters.toString());
         levenberqMarquardtParametersRepository.saveAndMarkNewDefaults(levenbergMarquardtParameters);
     }

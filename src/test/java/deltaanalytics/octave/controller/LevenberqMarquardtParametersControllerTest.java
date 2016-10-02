@@ -22,7 +22,7 @@ public class LevenberqMarquardtParametersControllerTest {
 
     @Test
     public void getActualLevenberqMarquardtParameters() throws Exception {
-        levenberqMarquardtParametersController.getActualHitran();
+        levenberqMarquardtParametersController.getActualLevenberg();
 
         verify(levenberqMarquardtParametersRepository).findByCurrentDefaultTrue();
     }
